@@ -132,7 +132,8 @@ details[open]>summary{margin-bottom:8px}
         <span><i style="background:var(--early-bg);border:1px solid var(--early)"></i>תורן מומחה</span>
         <span><i style="background:var(--weekend)"></i>שישי-שבת</span>
       </div>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><a class="wa" id="icsBtn" download="luach.ics" style="background:var(--duty);color:var(--duty-ink)">הוסף ליומן שלי</a><span class="note">מוריד קובץ יומן עם מה שמוצג כאן, כולל החגים שסימנת.</span></div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><a class="wa" id="icsBtn" download="luach.ics" style="background:var(--duty);color:var(--duty-ink)">הוסף ליומן שלי</a><button id="shareImg" style="background:var(--home);color:var(--surface);border-color:var(--home);font-weight:700;padding:5px 12px">שתף את הלוח כתמונה</button><canvas id="calCanvas" hidden></canvas><span class="note">מוריד קובץ יומן עם מה שמוצג כאן, כולל החגים שסימנת.</span></div>
+      <span class="note" id="shareNote" role="status">"שתף את הלוח כתמונה" פותח את תפריט השיתוף של הטלפון, ומשם בוחרים וואטסאפ.</span>
       <div style="display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line);padding-top:10px">
         <span style="font-weight:700;font-size:.95rem;color:var(--duty)">מועד אישי (חתונה, כנס, חופשה)</span>
         <span class="note">לחצו על יום בלוח או הקלידו אותו, כתבו מה יש בו, והוסיפו. נשמר במכשיר הזה בלבד ולא נראה לאחרים.</span>
@@ -288,6 +289,67 @@ if(typeof module!=='undefined'){module.exports={build:build,allNames:allNames,DA
     $('h'+k+'n').textContent=n?'':'(אין החודש)';
     $('h'+k).addEventListener('change',function(){H[k]=$('h'+k).checked;render();});
   });
+  var calBlob=null;
+  function cellInfo(o){
+    var L=[],kind='';
+    if(o.home){kind='home';L.push(['בבית','#2c7a58']);}
+    if(o.duty!==undefined){
+      if(o.duty){if(!o.home){kind='duty';}L.push([o.col,null]);}
+      if(!o.home&&o.time===DATA.rules.early){L.push([o.time,'#a45c00']);}
+    }else if(o.col){
+      if(o.half){L.push(['מומחה','#a45c00']);}else{kind='duty';L.push([o.col,null]);}
+    }
+    if(!kind&&o.weekend){kind='we';}
+    o.hol.forEach(function(x){L.push([x.short,'#a3271f']);});
+    return {kind:kind,L:L};
+  }
+  function paintCal(r){
+    calBlob=null;
+    var cv=$('calCanvas'),W=1080,pad=40,gap=8,cw=(W-2*pad-6*gap)/7,ch=158,top=190;
+    var first=r.days[0].dow,rows=Math.ceil((first+r.days.length)/7);
+    cv.width=W;cv.height=top+rows*(ch+gap)+70;
+    var x=cv.getContext('2d'),F='"Heebo","Arial Hebrew",Arial,sans-serif',who=(typeof me==='string'?me:me.name);
+    x.fillStyle='#f1f4f8';x.fillRect(0,0,W,cv.height);
+    x.fillStyle='#1d5fa7';x.fillRect(0,0,W,120);
+    x.direction='rtl';x.textAlign='right';x.textBaseline='alphabetic';
+    x.fillStyle='#ffffff';x.font='700 46px '+F;x.fillText(document.title+' - '+who,W-pad,62);
+    var p=DATA.month.split('-');x.font='400 30px '+F;x.fillText(HEB_MONTH[+p[1]-1]+' '+p[0]+' · מחלקת הרדמה',W-pad,104);
+    function colX(c){return W-pad-(c+1)*cw-c*gap;}
+    x.fillStyle='#566475';x.font='500 26px '+F;x.textAlign='center';
+    ['א׳','ב׳','ג׳','ד׳','ה׳','ו׳','ש׳'].forEach(function(h,c){x.fillText(h,colX(c)+cw/2,top-16);});
+    function rr(px,py,w,h,rad){x.beginPath();x.moveTo(px+rad,py);x.arcTo(px+w,py,px+w,py+h,rad);x.arcTo(px+w,py+h,px,py+h,rad);x.arcTo(px,py+h,px,py,rad);x.arcTo(px,py,px+w,py,rad);x.closePath();}
+    r.days.forEach(function(o,i){
+      var idx=first+i,c=idx%7,row=Math.floor(idx/7),px=colX(c),py=top+row*(ch+gap),ci=cellInfo(o);
+      var bg={duty:'#1d5fa7',home:'#dff1e8',we:'#d3e4f6','':'#ffffff'}[ci.kind];
+      rr(px,py,cw,ch,10);x.fillStyle=bg;x.fill();
+      if(!ci.kind){x.strokeStyle='#d5dce6';x.lineWidth=2;x.stroke();}
+      var ink=ci.kind==='duty'?'#ffffff':'#16212e';
+      x.textAlign='right';x.fillStyle=ci.kind==='home'?'#2c7a58':ink;x.font='700 34px '+F;x.fillText(String(o.d),px+cw-10,py+38);
+      var ty=py+68;x.font='700 21px '+F;
+      ci.L.forEach(function(l){
+        var words=String(l[0]).split(' '),line='';
+        x.fillStyle=ci.kind==='duty'?'#ffffff':(l[1]||ink);
+        words.forEach(function(w,k){
+          var t=line?line+' '+w:w;
+          if(line&&x.measureText(t).width>cw-16){if(ty<py+ch-6){x.fillText(line,px+cw-10,ty);}ty+=24;line=w;}else{line=t;}
+          if(k===words.length-1){if(ty<py+ch-6){x.fillText(line,px+cw-10,ty);}ty+=24;}
+        });
+      });
+    });
+    var ly=cv.height-28;x.font='400 22px '+F;x.textAlign='right';x.fillStyle='#566475';
+    x.fillText('כחול: תורנות או כוננות · ירוק: בבית אחרי תורנות · תכלת: שישי-שבת',W-pad,ly);
+    try{cv.toBlob(function(b){calBlob=b;},'image/png');}catch(e){}
+  }
+  $('shareImg').addEventListener('click',function(){
+    var note=$('shareNote');if(!calBlob){note.textContent='התמונה עוד לא מוכנה, נסו שוב בעוד רגע.';return;}
+    var file=null;try{file=new File([calBlob],'luach.png',{type:'image/png'});}catch(e){}
+    if(file&&navigator.canShare&&navigator.canShare({files:[file]})){
+      navigator.share({files:[file],title:document.title}).catch(function(){});
+    }else{
+      var a=document.createElement('a');a.href=URL.createObjectURL(calBlob);a.download='luach.png';document.body.appendChild(a);a.click();a.remove();
+      note.textContent='המכשיר לא תומך בשיתוף ישיר, אז התמונה ירדה להורדות. אפשר לצרף אותה משם לוואטסאפ.';
+    }
+  });
   var CK='luach.custom.'+DATA.month,baseHol=(DATA.holidays||[]).slice(),custom=[],nDays=(DATA.roster||DATA.senior).length;
   try{var cs=JSON.parse(localStorage.getItem(CK)||'[]');if(Array.isArray(cs)){custom=cs.filter(function(x){return x&&x.day>=1&&x.day<=nDays&&x.name;});}}catch(e){}
   function syncCustom(){
@@ -311,6 +373,7 @@ if(typeof module!=='undefined'){module.exports={build:build,allNames:allNames,DA
     $('empty').hidden=!!me;$('out').hidden=!me;if(!me){return;}
     var r=build(DATA,me,H);
     $('icsBtn').href='data:text/calendar;charset=utf-8,'+encodeURIComponent(icsFor(DATA,r.cal));
+    paintCal(r);
     $('m1').textContent=r.m1;$('m2').textContent=r.m2;$('m3').textContent=r.m3;
     ['m1','m2','m3'].forEach(function(k){var a=document.querySelector('[data-wa="'+k+'"]');if(a){a.href='https://wa.me/?text='+encodeURIComponent($(k).textContent);}});
     var dl=$('dutyList');dl.textContent='';
