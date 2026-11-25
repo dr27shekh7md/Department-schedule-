@@ -70,6 +70,10 @@ input[type=checkbox]{accent-color:var(--duty);width:18px;height:18px}
 
 .cell .t{white-space:nowrap;overflow-wrap:normal;font-size:.68rem;padding:0 3px;letter-spacing:-.01em}
 .cell span{overflow-wrap:normal}
+
+.cell .hol{color:var(--warn);font-weight:700}
+.cell.duty .hol{color:var(--duty-ink);text-decoration:underline}
+.item .with.hol{color:var(--warn);font-weight:700}
 </style>
 <div class="wrap" dir="rtl" lang="he">
   <header class="hero">
@@ -81,6 +85,12 @@ input[type=checkbox]{accent-color:var(--duty);width:18px;height:18px}
     <h2 id="who">מי אני</h2>
     <div class="row">
       <label class="f" for="name" style="color:var(--duty);font-weight:700;font-size:.95rem">השם שלי בלוח<select id="name"></select></label>
+    </div>
+    <div class="checks" id="holBox"><span style="font-weight:700;color:var(--duty);font-size:.95rem">חגים להצגה בלוח</span>
+      <label class="check" for="hJ"><input type="checkbox" id="hJ" checked>חגי היהודים <span class="note" id="hJn"></span></label>
+      <label class="check" for="hC"><input type="checkbox" id="hC" checked>חגי הנוצרים והשנה האזרחית <span class="note" id="hCn"></span></label>
+      <label class="check" for="hM"><input type="checkbox" id="hM" checked>חגי המוסלמים <span class="note" id="hMn"></span></label>
+      <label class="check" for="hD"><input type="checkbox" id="hD" checked>חגי הדרוזים <span class="note" id="hDn"></span></label>
     </div>
     <ul class="note" style="margin:0;padding-inline-start:18px;display:flex;flex-direction:column;gap:4px">
       <li>הדף מוצא לפי השם את הכוננויות (כונן 1, 2, 3) ואת תורנויות המומחה שלך.</li>
@@ -109,6 +119,7 @@ input[type=checkbox]{accent-color:var(--duty);width:18px;height:18px}
         <span><i style="background:var(--early-bg);border:1px solid var(--early)"></i>תורן מומחה</span>
         <span><i style="background:var(--weekend)"></i>שישי-שבת</span>
       </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><a class="wa" id="icsBtn" download="luach.ics" style="background:var(--duty);color:var(--duty-ink)">הוסף ליומן שלי</a><span class="note">מוריד קובץ יומן עם מה שמוצג כאן, כולל החגים שסימנת.</span></div>
     </section>
     <section class="card" aria-labelledby="hm">
       <h2 id="hm">הודעות מוכנות להעתקה</h2>
@@ -124,6 +135,15 @@ input[type=checkbox]{accent-color:var(--duty);width:18px;height:18px}
 /* MONTH DATA. senior rows: [כונן 1, כונן 2, כונן 3, תורן מומחה]; residents rows: [תורן 1, תורן 2, תורן 3, אגף נשים]. */
 var DATA={
   month:'2026-12',
+  holidays:[
+    {day:4,g:'J',name:'ערב חנוכה - נר ראשון',short:'ערב חנוכה'},
+    {day:5,g:'J',name:'חנוכה',short:'חנוכה'},{day:6,g:'J',name:'חנוכה',short:'חנוכה'},{day:7,g:'J',name:'חנוכה',short:'חנוכה'},
+    {day:8,g:'J',name:'חנוכה',short:'חנוכה'},{day:9,g:'J',name:'חנוכה',short:'חנוכה'},{day:10,g:'J',name:'חנוכה',short:'חנוכה'},
+    {day:11,g:'J',name:'חנוכה',short:'חנוכה'},{day:12,g:'J',name:'חנוכה',short:'חנוכה'},
+    {day:20,g:'J',name:'צום עשרה בטבת',short:'עשרה בטבת'},
+    {day:24,g:'C',name:'ערב חג המולד',short:'ערב חג המולד'},
+    {day:25,g:'C',name:'חג המולד',short:'חג המולד'},
+    {day:31,g:'C',name:'ערב השנה האזרחית',short:'ערב שנה אזרחית'}],
   senior:[
     ['דביר','מריסאת','ארזומנוב','וילנר'],['מריסאת','זברב','וילנר','ארזומנוב'],['דביר','זייבק','ארזומנוב','מריסאת'],
     ['זברב','זיוד','וילנר','גברילוב'],['זיוד','דביר','וילנר','מריסאת'],['זייבק','גברילוב','מוקבל','זברב'],
@@ -176,27 +196,46 @@ var EV={stageA:'הכנה לשלב א׳',stageB:'הכנה לשלב ב׳ - הצג�
 function pad2(n){return String(n).padStart(2,'0');}
 function allNames(D){var s={};D.senior.forEach(function(r){r.forEach(function(n){s[n]=1;});});
   return Object.keys(s).sort(function(a,b){return a.localeCompare(b,'he');});}
-function build(D,name){
+function icsFor(D,items){
+  var p=D.month.split('-'),y=p[0],m=p[1];
+  function esc(s){return String(s).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\n/g,'\\n');}
+  var out=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//luach//he','CALSCALE:GREGORIAN'];
+  items.forEach(function(e,i){
+    var d=y+m+pad2(e.day);
+    out.push('BEGIN:VEVENT','UID:'+D.month+'-'+e.day+'-'+i+'@luach','DTSTAMP:'+y+m+'01T000000Z');
+    if(e.time){var hh=+e.time.slice(0,2),mm=+e.time.slice(3,5),end=hh*60+mm+(e.mins||30);
+      out.push('DTSTART:'+d+'T'+pad2(hh)+pad2(mm)+'00','DTEND:'+d+'T'+pad2(Math.floor(end/60))+pad2(end%60)+'00');}
+    else{var nd=new Date(Date.UTC(+y,+m-1,e.day+1));
+      out.push('DTSTART;VALUE=DATE:'+d,'DTEND;VALUE=DATE:'+nd.getUTCFullYear()+pad2(nd.getUTCMonth()+1)+pad2(nd.getUTCDate()));}
+    out.push('SUMMARY:'+esc(e.title));if(e.desc){out.push('DESCRIPTION:'+esc(e.desc));}
+    out.push('END:VEVENT');
+  });
+  out.push('END:VCALENDAR');return out.join('\r\n');
+}
+function build(D,name,H){
   var p=D.month.split('-'),y=+p[0],m=+p[1],n=D.senior.length,title=HEB_MONTH[m-1]+' '+y;
   function dm(d){return pad2(d)+'/'+pad2(m);}
   function dow(d){return new Date(Date.UTC(y,m-1,d)).getUTCDay();}
-  var days=[],duties=[],tasks=[];
+  function hol(d){return (D.holidays||[]).filter(function(x){return x.day===d&&H&&H[x.g];});}
+  var days=[],duties=[],tasks=[],cal=[];
   for(var d=1;d<=n;d++){
     var row=D.senior[d-1],ri=row.indexOf(name),w=dow(d);
-    days.push({d:d,dow:w,weekend:w>=5,col:ri>=0?SCOL[ri]:'',half:ri===3});
-    if(ri>=0){duties.push({d:d,dow:w,role:SCOL[ri]+(ri===3?' (עד 22:30)':''),half:ri===3,
+    days.push({d:d,dow:w,weekend:w>=5,col:ri>=0?SCOL[ri]:'',half:ri===3,hol:hol(d)});
+    hol(d).forEach(function(x){cal.push({day:d,title:x.name});});
+    if(ri>=0){duties.push({d:d,dow:w,role:SCOL[ri]+(ri===3?' (עד 22:30)':''),half:ri===3,hol:hol(d).map(function(x){return x.name;}),
       seniors:row.map(function(x,i){return i===ri?null:x+' ('+SCOL[i]+')';}).filter(Boolean),
       residents:D.residents[d-1].map(function(x,i){return x+' ('+RCOL[i]+')';})});}
   }
   D.events.forEach(function(e){
     if(e.kind==='cancel'||(e.people||[]).indexOf(name)<0){return;}
     var co=e.people.filter(function(x){return x!==name;}).join(' וד״ר ');
+    cal.push({day:e.day,title:EV[e.kind]+(co?' עם ד״ר '+co:''),time:'07:00',desc:e.topic||''});
     tasks.push({d:e.day,dow:dow(e.day),what:EV[e.kind]+(co?' עם ד״ר '+co:''),topic:e.topic||''});
   });
   var m1='*הכוננויות והתורנויות שלי - '+title+'*\n\n';
   if(!duties.length){m1+='אין לי כוננויות או תורנויות בחודש זה לפי הלוח.';}
   else{
-    m1+=duties.map(function(o){return dm(o.d)+', '+HEB_DOW[o.dow]+' - '+o.role;}).join('\n');
+    m1+=duties.map(function(o){return dm(o.d)+', '+HEB_DOW[o.dow]+' - '+o.role+(o.hol.length?' ('+o.hol.join(', ')+')':'');}).join('\n');
     var c=duties.filter(function(o){return !o.half;}).length,h=duties.length-c;
     m1+='\n\n*סה״כ: '+c+' כוננויות, '+h+' תורנויות מומחה*';
   }
@@ -205,7 +244,8 @@ function build(D,name){
   else{m2+=tasks.map(function(o){return dm(o.d)+', '+HEB_DOW[o.dow]+' - 07:00 - '+o.what+(o.topic?'\n'+o.topic:'');}).join('\n\n');}
   var m3='*ישיבות צוות - '+title+'*\nימי חמישי, 07:00\n\n'+D.events.filter(function(e){return e.kind==='staff'||e.kind==='cancel';}).map(function(e){
     return e.kind==='cancel'?dm(e.day)+' - אין ישיבה ('+e.topic+')':dm(e.day)+' - '+e.topic+'\nמציגים: '+e.people.map(function(x){return 'ד״ר '+x;}).join(', ');}).join('\n\n');
-  return {days:days,duties:duties,tasks:tasks,m1:m1,m2:m2,m3:m3,dm:dm};
+  duties.forEach(function(o){cal.push({day:o.d,title:o.role,desc:'בכירים: '+o.seniors.join(', ')+'. תורנים: '+o.residents.join(', ')});});
+  return {cal:cal,days:days,duties:duties,tasks:tasks,m1:m1,m2:m2,m3:m3,dm:dm};
 }
 if(typeof module!=='undefined'){module.exports={build:build,allNames:allNames,DATA:DATA};}
 </script>
@@ -219,9 +259,16 @@ if(typeof module!=='undefined'){module.exports={build:build,allNames:allNames,DA
   allNames(DATA).forEach(function(n){sel.appendChild(new Option(n,n));});
   var p=DATA.month.split('-');
   $('monthLine').textContent=HEB_MONTH[+p[1]-1]+' '+p[0]+' · מחלקת הרדמה · לפי לוח התורנויות ולוח ישיבות הצוות שפורסמו';
+  var H={J:true,C:true,M:true,D:true};
+  ['J','C','M','D'].forEach(function(k){
+    var n=(DATA.holidays||[]).filter(function(h){return h.g===k;}).length;
+    $('h'+k+'n').textContent=n?'':'(אין בחודש זה)';
+    $('h'+k).addEventListener('change',function(){H[k]=$('h'+k).checked;render();});
+  });
   function render(){
     $('empty').hidden=!!me;$('out').hidden=!me;if(!me){return;}
-    var r=build(DATA,me);
+    var r=build(DATA,me,H);
+    $('icsBtn').href='data:text/calendar;charset=utf-8,'+encodeURIComponent(icsFor(DATA,r.cal));
     $('m1').textContent=r.m1;$('m2').textContent=r.m2;$('m3').textContent=r.m3;
     ['m1','m2','m3'].forEach(function(k){var a=document.querySelector('[data-wa="'+k+'"]');if(a){a.href='https://wa.me/?text='+encodeURIComponent($(k).textContent);}});
     var dl=$('dutyList');dl.textContent='';
@@ -229,7 +276,8 @@ if(typeof module!=='undefined'){module.exports={build:build,allNames:allNames,DA
       var it=el('div','item');it.appendChild(el('span','when',r.dm(o.d)+', יום '+HEB_DOW[o.dow]));
       var what=el('span','what');what.appendChild(el('b',o.half?'red':'',o.role));it.appendChild(what);
       it.appendChild(el('span','with','בכירים: '+o.seniors.join(', ')));
-      it.appendChild(el('span','with','תורנים: '+o.residents.join(', ')));dl.appendChild(it);
+      it.appendChild(el('span','with','תורנים: '+o.residents.join(', ')));
+      if(o.hol.length){it.appendChild(el('span','with hol','חל ב: '+o.hol.join(', ')));}dl.appendChild(it);
     });
     if(!r.duties.length){dl.appendChild(el('p','note','אין לך כוננויות או תורנויות בחודש זה לפי הלוח.'));}
     var tl=$('taskList');tl.textContent='';
@@ -245,6 +293,7 @@ if(typeof module!=='undefined'){module.exports={build:build,allNames:allNames,DA
     r.days.forEach(function(o){
       var c=el('div','cell'+(o.col&&!o.half?' duty':o.weekend?' we':''));
       c.appendChild(el('b','',String(o.d)));
+      o.hol.forEach(function(x){c.appendChild(el('span','hol',x.short));});
       if(o.col){c.appendChild(el('span',o.half?'t':'',o.half?'מומחה':o.col));}
       cal.appendChild(c);
     });
