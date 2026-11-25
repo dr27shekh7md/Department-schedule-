@@ -1,4 +1,4 @@
-<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"></head><body><title>לוח בכירים</title>
+<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"></head><body><title>עוד חודש במחלקה - בכירים</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=Rubik:wght@500;700&display=swap">
 <style>
@@ -101,11 +101,42 @@ details[open]>summary{margin-bottom:8px}
 input[type=date]{font:inherit;color:inherit;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:7px 9px;max-width:100%}
 #cuType{min-width:0;font-size:1rem;border-width:1px;padding:7px 9px}
 #chart svg{width:100%;height:auto;max-width:420px;display:block;margin:0 auto}
+
+.hero{text-align:center}
+.hero h1{font-size:1.9rem}
+.hero .month{font-family:var(--display);font-weight:700;font-size:1.5rem;line-height:1.3;margin:8px auto;display:table;background:var(--hol);color:#12396b;border-radius:8px;padding:2px 18px}
+.hero .sub{display:block}
+.item .with .g.gs{font-size:1rem;color:var(--duty);border-top:1px dashed var(--line);margin-top:6px;padding-top:6px}
+.item .with .p.half .r{font-size:1rem}
+.item .with .p.half .n{font-size:1.18rem}
+.item .with .p.oncall{padding:1px 0}
+.item .with .p.oncall .r{color:var(--duty);font-size:.82rem}
+.item .with .p.oncall .n{font-size:.88rem;font-weight:500}
+.item .with .p.oncall .tel{font-size:.85rem;font-weight:500}
+#dutyList .what b.oncall{color:var(--duty)}
+.cell.oncall{background:var(--duty);color:var(--duty-ink);border-color:var(--duty)}
+.cell .hol,.cell.duty .hol{margin-top:auto;border:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cell .hol~.hol{margin-top:0}
+.cell .hol.rest,.cell.duty .hol.rest{border:1px solid var(--hol-edge)}
+.cell.rest{outline:3px solid var(--hol);outline-offset:-3px}
+details.card{display:block;padding:14px 16px;border:1px solid var(--line)}
+details.card>summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px;margin:0}
+details.card>summary::-webkit-details-marker{display:none}
+details.card>summary h2{display:inline}
+details.card>summary::after{content:"הצג";font-size:.85rem;font-weight:700;color:var(--duty);border:1px solid var(--line);border-radius:6px;padding:2px 12px}
+details.card[open]>summary::after{content:"הסתר"}
+details.card[open]>summary{margin-bottom:0}
+.foldin{display:flex;flex-direction:column;gap:14px;margin-top:14px}
+#statBox{display:flex;flex-direction:column;gap:2px;font-size:.95rem}
+#statBox b{font-size:1.05rem}
+.how li{margin-bottom:2px}
 </style>
 <div class="wrap" dir="rtl" lang="he">
   <header class="hero">
-    <h1>לוח בכירים</h1>
-    <p class="sub" id="monthLine"></p>
+    <h1>עוד חודש במחלקה</h1>
+    <p class="month" id="monthBig"></p>
+    <p class="sub">מחלקת הרדמה · לוח בכירים</p>
+    <p class="sub">לפי לוח התורנויות ולוח ישיבות הצוות שפורסמו</p>
   </header>
 
   <section class="card" aria-label="בחירת שם והגדרות" style="gap:10px;padding:12px 14px">
@@ -129,10 +160,15 @@ input[type=date]{font:inherit;color:inherit;background:var(--bg);border:1px soli
       <span class="note" id="telNote" role="status" style="display:block;margin-top:6px">הטלפונים של מי שתורן וכונן איתך מוצגים רק אחרי הקלדת הקוד שנשלח בקבוצת המחלקה. הקוד נשמר במכשיר הזה.</span>
     </details>
     <details><summary>איך הלוח עובד</summary>
-      <ul class="note" style="margin:0;padding-inline-start:18px;display:flex;flex-direction:column;gap:4px">
-      <li>הדף מוצא לפי השם את הכוננויות (כונן 1, 2, 3) ואת תורנויות המומחה שלך.</li>
-      <li>ישיבות שהשם שלך מופיע בהן בעמודת "מציג" מסומנות בנפרד.</li>
-      <li>ישיבת צוות בימי חמישי ב־07:00 היא לכולם.</li>
+      <ul class="note how" style="margin:0;padding-inline-start:18px">
+      <li>בוחרים שם, והדף מוצא את הכוננויות (כונן 1, 2, 3) ואת תורנויות המומחה שלכם.</li>
+      <li>תורן מומחה מסומן באדום, כוננות בכחול.</li>
+      <li>ישיבות שהשם שלכם מופיע בהן בעמודת "מציג" מסומנות בנפרד. ישיבת צוות בימי חמישי ב־07:00 היא לכולם.</li>
+      <li>"חגים ומועדים בלוח": מבטלים סימון של מה שלא רלוונטי אליכם.</li>
+      <li>"טלפונים של הצוות": מקלידים פעם אחת את הקוד המחלקתי, ואז ליד כל שם מופיע מספר שאפשר לחייג אליו בלחיצה.</li>
+      <li>"הוסף ליומן שלי": מוריד קובץ יומן. פותחים אותו, והטלפון מציע להוסיף את האירועים ליומן. אם הלוח משתנה, מוסיפים שוב.</li>
+      <li>"שתף את הלוח כתמונה": שולח תמונה של החודש שלכם לוואטסאפ או לכל אפליקציה אחרת.</li>
+      <li>"האירועים שלי": חופשה, מחלה, כנס או יום ספרייה. בוחרים תאריך וסוג ולוחצים "הוסף". נשמר רק במכשיר שלכם.</li>
       <li style="color:var(--warn);font-weight:700">אם משהו לא תואם, הלוח של המחלקה הוא הקובע.</li>
     </ul>
     </details>
@@ -151,40 +187,34 @@ input[type=date]{font:inherit;color:inherit;background:var(--bg);border:1px soli
       <h2 id="hc">החודש במבט אחד</h2>
       <div class="cal" id="cal"></div>
       <div class="legend">
-        <span><i style="background:var(--red)"></i>כוננות</span>
-        <span><i style="background:var(--early-bg);border:1px solid var(--early)"></i>תורן מומחה</span>
+        <span><i style="background:var(--duty)"></i>כוננות</span>
+        <span><i style="background:var(--red)"></i>תורן מומחה</span>
         <span><i style="background:var(--weekend)"></i>שישי-שבת</span>
         <span><i style="background:var(--hol);border:1.5px solid var(--hol-edge)"></i>חג או מועד</span>
       </div>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><a class="wa" id="icsBtn" download="luach.ics" style="background:var(--duty);color:var(--duty-ink)">הוסף ליומן שלי</a><button id="shareImg" style="background:var(--home);color:var(--surface);border-color:var(--home);font-weight:700;padding:5px 12px">שתף את הלוח כתמונה</button><canvas id="calCanvas" hidden></canvas><span class="note">מוריד קובץ יומן עם מה שמוצג כאן, כולל החגים שסימנת.</span></div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><a class="wa" id="icsBtn" download="luach.ics" style="background:var(--duty);color:var(--duty-ink)">הוסף ליומן שלי</a><button id="shareImg" style="background:var(--home);color:var(--surface);border-color:var(--home);font-weight:700;padding:5px 12px">שתף את הלוח כתמונה</button><canvas id="calCanvas" hidden></canvas><span class="note">"הוסף ליומן שלי" מוריד קובץ יומן עם התורנויות, המפגשים, החגים והאירועים שסימנת. פותחים את הקובץ, והטלפון מציע להוסיף את האירועים ליומן שלו (גוגל, אפל או סמסונג). זו הוספה חד־פעמית: אם הלוח משתנה, מוסיפים שוב.</span></div>
       <span class="note" id="shareNote" role="status">"שתף את הלוח כתמונה" פותח את תפריט השיתוף של הטלפון, ומשם בוחרים וואטסאפ.</span>
       <div style="display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line);padding-top:10px">
-        <span style="font-weight:700;font-size:.95rem;color:var(--duty)">מועד אישי</span>
-        <span class="note">בחרו תאריך (או לחצו על יום בלוח), בחרו מה יש בו, והוסיפו. נשמר במכשיר הזה בלבד ולא נראה לאחרים.</span>
+        <span style="font-weight:700;font-size:.95rem;color:var(--duty)">האירועים שלי</span>
+        <span class="note">חופשה, מחלה, כנס או יום ספרייה: בחרו תאריך (או לחצו על יום בלוח), בחרו סוג, והוסיפו. נשמר במכשיר הזה בלבד ולא נראה לאחרים.</span>
         <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
           <input type="date" id="cuDate" aria-label="תאריך המועד">
-          <select id="cuType" aria-label="סוג המועד"><option>חופשה</option><option>חו״ל</option><option>כנס</option><option>השתלמות</option><option>חתונה</option><option>אירוע משפחתי</option><option>מילואים</option><option>מחלה</option><option>אחר</option></select>
+          <select id="cuType" aria-label="סוג האירוע"><option>חופשה</option><option>חו״ל</option><option>מחלה</option><option>כנס</option><option>יום ספרייה</option><option>השתלמות</option><option>מילואים</option><option>אחר</option></select>
           <input type="text" id="cuName" placeholder="פירוט (לא חובה)" aria-label="פירוט" style="flex:1;min-width:120px">
           <button id="cuAdd" style="padding:7px 14px">הוסף</button>
         </div>
         <div id="cuList" style="display:flex;flex-direction:column;gap:4px"></div>
       </div>
     </section>
-    <section class="card" aria-labelledby="hg">
-      <h2 id="hg">מגמה לפי חודשים</h2>
-      <div id="chart"></div>
-      <div class="legend"><span><i style="background:var(--red)"></i>כוננויות</span><span><i style="background:var(--early)"></i>תורן מומחה</span><span><i style="background:var(--duty)"></i>מתוכן בשישי-שבת</span></div>
-      <p class="note" id="statLine"></p>
-      <p class="note">כרגע מוצג דצמבר בלבד. חודשים נוספים יתווספו עם כל לוח חדש.</p>
-    </section>
-
-    <section class="card" aria-labelledby="hm">
-      <h2 id="hm">הודעות מוכנות להעתקה</h2>
-      <p class="sub">נבנות לבד מהלוח. להדביק לעצמך בוואטסאפ או בפתקים.</p>
+    <details class="card" aria-labelledby="hm"><summary><h2 id="hm">הודעות מוכנות להעתקה</h2></summary><div class="foldin"><p class="sub">נבנות לבד מהלוח. להדביק לעצמך בוואטסאפ או בפתקים.</p>
       <div class="msg"><div class="msg-head"><h3>כוננויות ותורנויות</h3><span class="acts"><a class="wa" data-wa="m1">שלח לוואטסאפ</a><button data-copy="m1">העתק</button></span></div><pre id="m1"></pre></div>
       <div class="msg"><div class="msg-head"><h3>ישיבות שאני מציג בהן</h3><span class="acts"><a class="wa" data-wa="m2">שלח לוואטסאפ</a><button data-copy="m2">העתק</button></span></div><pre id="m2"></pre></div>
-      <div class="msg"><div class="msg-head"><h3>ישיבות צוות החודש</h3><span class="acts"><a class="wa" data-wa="m3">שלח לוואטסאפ</a><button data-copy="m3">העתק</button></span></div><pre id="m3"></pre></div>
-    </section>
+      <div class="msg"><div class="msg-head"><h3>ישיבות צוות החודש</h3><span class="acts"><a class="wa" data-wa="m3">שלח לוואטסאפ</a><button data-copy="m3">העתק</button></span></div><pre id="m3"></pre></div></div></details>
+
+    <details class="card" aria-labelledby="hg"><summary><h2 id="hg">מגמה לפי חודשים</h2></summary><div class="foldin"><div id="chart"></div>
+      <div class="legend"><span><i style="background:var(--duty)"></i>כוננויות</span><span><i style="background:var(--red)"></i>תורן מומחה</span><span><i style="background:var(--early)"></i>מתוכן בשישי-שבת</span></div>
+      <div id="statBox"></div>
+      <p class="note">כרגע מוצג דצמבר בלבד. חודשים נוספים יתווספו עם כל לוח חדש.</p></div></details>
   </div>
 </div>
 
@@ -198,9 +228,9 @@ var DATA={
     {day:8,g:'J',name:'חנוכה',short:'חנוכה'},{day:9,g:'J',name:'חנוכה',short:'חנוכה'},{day:10,g:'J',name:'חנוכה',short:'חנוכה'},
     {day:11,g:'J',name:'חנוכה',short:'חנוכה'},{day:12,g:'J',name:'חנוכה',short:'חנוכה'},
     {day:20,g:'J',name:'צום עשרה בטבת',short:'עשרה בטבת'},
-    {day:24,g:'C',name:'ערב חג המולד',short:'ערב חג המולד'},
-    {day:25,g:'C',name:'חג המולד',short:'חג המולד'},
-    {day:31,g:'C',name:'ערב השנה האזרחית',short:'ערב שנה אזרחית'}],
+    {day:24,g:'C',name:'ערב חג המולד',short:'ערב חג המולד',rest:true},
+    {day:25,g:'C',name:'חג המולד',short:'חג המולד',rest:true},
+    {day:31,g:'C',name:'ערב השנה האזרחית',short:'שנה חדשה'}],
   phonesEnc:'Rcgvpa03KVdj8IsaJgbRjQtupPVtbYv6TMaUYPe4SM7X0sHMRt/fmTyMow9xOLqjgWaLQtt5zpJtPeeF/ZyJPb/Z1IIk/IfV4RFJ0+EDms25CtI0KY3L8nwmmrv7ZWG0tqeTo98Lw8boJ7x2RGhQpjQ5bjNXB81172eL1044rtpbtZU37qY+J8kUuKEnor3+gekH+XmDzTUoiMK9qTcIbis5G4JrWw+TZmRaVOpahhNuNAwWkGizfJjpU5JHoPRNPKLD1mGuvVCZpMq+Darvh2fj3TnbXnyK3qLXZyfySKGl7miU+DaBEYwSfErlGCvAmyh25Cz0GZf3SaACdkXIefy3enyLdCJWp1hGQ3FQcaLPPodzzNQLtNwLrPYY99W7tkNuY57P7SnC8320JJR/OiUWAIKuEr2auvxQgU4HlejKALmoojK7ts2MOmxUy3SYLGpJXxoSvoOuPfFOWxLeOpFOi57YlPTFxOKDToSisprk2ByQxgI4kuQys8DjQlFUlOM6JwORAdxb9pM13Xc8EMNHn8nElszEymxupGz+YrvdkvqYY8dqkY01VATeDCRH6KCub05nn/XH2DgXdnH4eOUUqbscTqfz9epIoSXfVv5Wh8spkjMBfoX67bf5MXF7m77L/6PcaDp6CGlr+QdQEvSwvlg8hlr5xV4FbKLHzOla81jxPrmvz6yX74BaZDrWR/4rK4PEwPZloDWj002GWj8Lk4ZCK0ffQrt3p6R2yanlbtFDFFX6eXvB+LfpPHC1ihEah6/1ctMC116i/6bcsEowSk4edVtgSnvSsQ/ORNcXsJS8g9Q2KVeljPpKR2GdzoviioRGe/7YGFRxMe6FdEm1OCSjrxSdxrLxjfi+8e81YLXH3G4Ypi7wdeY/9q+5D97/aTXbU1lADqJ3flVR0zXko/T7u4FpyPe9FF1udeodtkh6p5E9lQTv5f/rGgSHU0H1TTUfBT8Bzc0X7whpWTPy+ihJ3svZwk263Yai1JAInjl8wcXienuabtTYo+DkTTgwOXy+SeO0VywXSsUo+sIpLa0XmPBHj+sA5w+7lXLIjjnyFM8R3o7CivDFdlnA5i5Cb4LQBuQ1Al/lvHUo2Aa5iJLUCK1gY0fPVTyhag9btb7RdHxECz64SknyfIGc9tQyp8IA7AL2CXq1+TlPCxgAc+kFFbk1AuAiAWDFCrtz4c4x8ZKQWngFZp3GBX9vCnWblYQVuRqb',
   senior:[
     ['דביר','מריסאת','ארזומנוב','וילנר'],['מריסאת','זברב','וילנר','ארזומנוב'],['דביר','זייבק','ארזומנוב','מריסאת'],
@@ -316,7 +346,7 @@ if(typeof module!=='undefined'){module.exports={build:build,allNames:allNames,DA
   var sel=$('name');sel.appendChild(new Option('בחרו שם...',''));
   allNames(DATA).forEach(function(n){sel.appendChild(new Option(n,n));});
   var p=DATA.month.split('-');
-  $('monthLine').textContent=HEB_MONTH[+p[1]-1]+' '+p[0]+' · מחלקת הרדמה · לפי לוח התורנויות ולוח ישיבות הצוות שפורסמו';
+  $('monthBig').textContent=HEB_MONTH[+p[1]-1]+' '+p[0];
   var H={J:true,C:true,M:true,D:true,N:true,P:true,X:true};
   ['J','C','M','D','N','P'].forEach(function(k){
     var n=(DATA.holidays||[]).filter(function(h){return h.g===k;}).length;
@@ -328,7 +358,7 @@ if(typeof module!=='undefined'){module.exports={build:build,allNames:allNames,DA
   function teamOf(d){
     var self=(typeof me==='string'?me:me.name),out=[],RC=['תורן 1','תורן 2','תורן 3','אגף נשים'],SC=['כונן 1','כונן 2','כונן 3','תורן מומחה'];
     (DATA.roster||DATA.residents)[d-1].forEach(function(n,i){n=cn(n);if(n!==self){out.push({g:'תורנים',role:RC[i],name:n});}});
-    [3,0,1,2].forEach(function(i){var n=DATA.senior[d-1][i];if(n!==self){out.push({g:'בכירים',role:SC[i],name:n});}});
+    [3,0,1,2].forEach(function(i){var n=DATA.senior[d-1][i];if(n!==self){out.push({g:'בכירים',role:SC[i],name:n,k:i===3?'half':'oncall'});}});
     return out;
   }
   function fmtTel(t){return t.slice(0,3)+'-'+t.slice(3,6)+'-'+t.slice(6);}
@@ -336,8 +366,8 @@ if(typeof module!=='undefined'){module.exports={build:build,allNames:allNames,DA
   function addTeam(it,d){
     var box=el('span','with'),last='';
     teamOf(d).forEach(function(x){
-      if(x.g!==last){box.appendChild(el('span','g',x.g+' איתך'));last=x.g;}
-      var p=el('span','p');p.appendChild(el('span','r',x.role));p.appendChild(el('span','n',x.name));
+      if(x.g!==last){box.appendChild(el('span','g'+(x.g==='בכירים'?' gs':''),x.g+' איתך'));last=x.g;}
+      var p=el('span','p'+(x.k?' '+x.k:''));p.appendChild(el('span','r',x.role));p.appendChild(el('span','n',x.name));
       if(PH&&PH[x.name]){var a=el('a','tel',fmtTel(PH[x.name]));a.href='tel:+972'+PH[x.name].slice(1);p.appendChild(a);}
       box.appendChild(p);
     });
@@ -380,67 +410,68 @@ if(typeof module!=='undefined'){module.exports={build:build,allNames:allNames,DA
     box.appendChild(svg);
   }
   function monthLabel(m){var p=m.split('-');return HEB_MONTH[+p[1]-1]+' '+p[0];}
-  function vacDays(){return custom.filter(function(x){return x.type==='חופשה'||x.type==='חו״ל';}).length;}
+  function typeDays(list){return custom.filter(function(x){return list.indexOf(x.type)>=0;}).length;}
+  function statRows(rows){var box=$('statBox');box.textContent='';box.appendChild(el('b','','החודש'));rows.forEach(function(t){box.appendChild(el('span','',t));});}
   function drawStats(r){
     var on=r.duties.filter(function(o){return !o.half;}).length,half=r.duties.length-on,we=r.duties.filter(function(o){return o.dow>=5;}).length;
-    drawChart([{label:monthLabel(DATA.month),bars:[{name:'כוננויות',v:on,c:'--red'},{name:'תורן מומחה',v:half,c:'--early'},{name:'מתוכן בשישי-שבת',v:we,c:'--duty'}]}]);
-    $('statLine').textContent='החודש: '+r.tasks.length+' ישיבות שאני מציג בהן · '+vacDays()+' ימי חופשה שסימנתי';
+    drawChart([{label:monthLabel(DATA.month),bars:[{name:'כוננויות',v:on,c:'--duty'},{name:'תורן מומחה',v:half,c:'--red'},{name:'מתוכן בשישי-שבת',v:we,c:'--early'}]}]);
+    statRows([r.tasks.length+' ישיבות שאני מציג בהן',typeDays(['חופשה','חו״ל'])+' ימי חופשה שסימנתי',typeDays(['מחלה'])+' ימי מחלה שסימנתי',typeDays(['כנס','יום ספרייה','השתלמות'])+' ימי כנס, ספרייה והשתלמות שסימנתי']);
   }
   var calBlob=null;
   function cellInfo(o){
-    var L=[],kind='';
+    var L=[],kind='',rest=o.hol.some(function(x){return x.rest;});
     if(o.duty!==undefined){
       if(o.home){kind='home';}else if(o.duty){kind='duty';}
       if(!o.home&&o.time===DATA.rules.early){L.push({t:o.time,type:'time'});}
       if(o.home){L.push({t:'בבית',type:'home'});}
       if(o.duty){L.push({t:o.col,type:'duty'});}
     }else if(o.col){
-      if(o.half){L.push({t:'מומחה',type:'half'});}else{kind='duty';L.push({t:o.col,type:'duty'});}
+      if(o.half){kind='duty';L.push({t:'מומחה',type:'duty'});}else{kind='oncall';L.push({t:o.col,type:'duty'});}
     }
-    if(!kind&&o.weekend){kind='we';}
-    o.hol.forEach(function(x){L.push({t:x.short,type:'hol'});});
-    return {kind:kind,L:L};
+    if(!kind&&(o.weekend||rest)){kind='we';}
+    o.hol.forEach(function(x){L.push({t:x.short,type:'hol',rest:!!x.rest});});
+    return {kind:kind,L:L,rest:rest};
   }
   function paintCal(r){
     calBlob=null;
-    var cv=$('calCanvas'),W=1080,pad=40,gap=8,cw=(W-2*pad-6*gap)/7,ch=166,top=190;
+    var cv=$('calCanvas'),W=1080,pad=40,gap=8,cw=(W-2*pad-6*gap)/7,ch=176,top=190;
     var first=r.days[0].dow,rows=Math.ceil((first+r.days.length)/7);
     cv.width=W;cv.height=top+rows*(ch+gap)+70;
     var x=cv.getContext('2d'),F='"Heebo","Arial Hebrew",Arial,sans-serif',who=(typeof me==='string'?me:me.name);
     x.fillStyle='#f1f4f8';x.fillRect(0,0,W,cv.height);
     x.fillStyle='#1d5fa7';x.fillRect(0,0,W,120);
     x.direction='rtl';x.textAlign='right';x.textBaseline='alphabetic';
-    x.fillStyle='#ffffff';x.font='700 46px '+F;x.fillText(document.title+' - '+who,W-pad,62);
-    var p=DATA.month.split('-');x.font='400 30px '+F;x.fillText(HEB_MONTH[+p[1]-1]+' '+p[0]+' · מחלקת הרדמה',W-pad,104);
+    var p=DATA.month.split('-');
+    x.fillStyle='#ffffff';x.font='700 46px '+F;x.fillText(HEB_MONTH[+p[1]-1]+' '+p[0]+' - '+who,W-pad,62);
+    x.font='400 30px '+F;x.fillText('עוד חודש במחלקה · מחלקת הרדמה',W-pad,104);
     function colX(c){return W-pad-(c+1)*cw-c*gap;}
     x.fillStyle='#566475';x.font='500 26px '+F;x.textAlign='center';
     ['א׳','ב׳','ג׳','ד׳','ה׳','ו׳','ש׳'].forEach(function(h,c){x.fillText(h,colX(c)+cw/2,top-16);});
     function rr(px,py,w,h,rad){x.beginPath();x.moveTo(px+rad,py);x.arcTo(px+w,py,px+w,py+h,rad);x.arcTo(px+w,py+h,px,py+h,rad);x.arcTo(px,py+h,px,py,rad);x.arcTo(px,py,px+w,py,rad);x.closePath();}
+    function wrap(t){var words=String(t).split(' '),out=[],line='';words.forEach(function(w){var s=line?line+' '+w:w;if(line&&x.measureText(s).width>cw-30){out.push(line);line=w;}else{line=s;}});if(line){out.push(line);}return out;}
     r.days.forEach(function(o,i){
-      var idx=first+i,c=idx%7,row=Math.floor(idx/7),px=colX(c),py=top+row*(ch+gap),ci=cellInfo(o);
-      var bg={duty:'#b3261e',home:'#dff1e8',we:'#d3e4f6','':'#ffffff'}[ci.kind];
+      var idx=first+i,c=idx%7,row=Math.floor(idx/7),px=colX(c),py=top+row*(ch+gap),ci=cellInfo(o),solid=(ci.kind==='duty'||ci.kind==='oncall');
+      var bg={duty:'#b3261e',oncall:'#1d5fa7',home:'#dff1e8',we:'#d3e4f6','':'#ffffff'}[ci.kind];
       rr(px,py,cw,ch,10);x.fillStyle=bg;x.fill();
       if(!ci.kind){x.strokeStyle='#d5dce6';x.lineWidth=2;x.stroke();}
-      var ink=ci.kind==='duty'?'#ffffff':'#16212e';
-      x.textAlign='right';x.fillStyle=ci.kind==='home'?'#2c7a58':ink;x.font='700 34px '+F;x.fillText(String(o.d),px+cw-10,py+38);
-      var ty=py+68;x.font='700 21px '+F;
-      function put(line,l){
-        if(ty>=py+ch-6){return;}
-        if(l.type==='hol'){var w=x.measureText(line).width;rr(px+cw-10-w-7,ty-20,w+14,26,6);x.fillStyle='#f5c400';x.fill();x.strokeStyle='#1d5fa7';x.lineWidth=2;x.stroke();x.fillStyle='#12396b';}
-        else{x.fillStyle=ci.kind==='duty'?'#ffffff':({time:'#a45c00',half:'#b3261e',home:'#2c7a58'}[l.type]||ink);}
-        x.fillText(line,px+cw-10,ty);
-      }
-      ci.L.forEach(function(l){
-        var words=String(l.t).split(' '),line='';
-        words.forEach(function(w,k){
-          var t=line?line+' '+w:w;
-          if(line&&x.measureText(t).width>cw-30){put(line,l);ty+=29;line=w;}else{line=t;}
-          if(k===words.length-1){put(line,l);ty+=29;}
-        });
+      if(ci.rest){rr(px+3,py+3,cw-6,ch-6,8);x.strokeStyle='#f5c400';x.lineWidth=6;x.stroke();}
+      var ink=solid?'#ffffff':'#16212e';
+      x.textAlign='right';x.fillStyle=ci.kind==='home'?'#2c7a58':ink;x.font='700 34px '+F;x.fillText(String(o.d),px+cw-12,py+40);
+      var ty=py+70;x.font='700 21px '+F;
+      ci.L.filter(function(l){return l.type!=='hol';}).forEach(function(l){
+        wrap(l.t).forEach(function(line){x.fillStyle=solid?'#ffffff':({time:'#a45c00',home:'#2c7a58'}[l.type]||ink);x.fillText(line,px+cw-12,ty);ty+=27;});
+      });
+      var hl=[];ci.L.filter(function(l){return l.type==='hol';}).forEach(function(l){wrap(l.t).slice(0,2).forEach(function(line){hl.push([line,l.rest]);});});
+      hl=hl.slice(0,2);
+      hl.forEach(function(h,k){
+        var by=py+ch-12-(hl.length-1-k)*28,w=x.measureText(h[0]).width;
+        rr(px+cw-12-w-7,by-20,w+14,26,6);x.fillStyle='#f5c400';x.fill();
+        if(h[1]){x.strokeStyle='#1d5fa7';x.lineWidth=2;x.stroke();}
+        x.fillStyle='#12396b';x.fillText(h[0],px+cw-12,by);
       });
     });
-    var ly=cv.height-28;x.font='400 22px '+F;x.textAlign='right';x.fillStyle='#566475';
-    x.fillText('אדום: תורנות או כוננות · ירוק: בבית אחרי תורנות · תכלת: שישי-שבת · צהוב: חג או מועד',W-pad,ly);
+    var ly=cv.height-28;x.font='400 21px '+F;x.textAlign='right';x.fillStyle='#566475';
+    x.fillText('אדום: תורנות · כחול: כוננות · ירוק: בבית אחרי תורנות · תכלת: שישי-שבת · צהוב: חג או מועד',W-pad,ly);
     try{cv.toBlob(function(b){calBlob=b;},'image/png');}catch(e){}
   }
   $('shareImg').addEventListener('click',function(){
@@ -484,7 +515,7 @@ if(typeof module!=='undefined'){module.exports={build:build,allNames:allNames,DA
     var dl=$('dutyList');dl.textContent='';
     r.duties.forEach(function(o){
       var it=el('div','item');it.appendChild(el('span','when',r.dm(o.d)+', יום '+HEB_DOW[o.dow]));
-      var what=el('span','what');what.appendChild(el('b',o.half?'red':'',o.role));it.appendChild(what);
+      var what=el('span','what');what.appendChild(el('b',o.half?'':'oncall',o.role));it.appendChild(what);
       addTeam(it,o.d);
       if(o.hol.length){it.appendChild(el('span','with hol','חל ב: '+o.hol.join(', ')));}dl.appendChild(it);
     });
@@ -500,9 +531,9 @@ if(typeof module!=='undefined'){module.exports={build:build,allNames:allNames,DA
     ['א׳','ב׳','ג׳','ד׳','ה׳','ו׳','ש׳'].forEach(function(h){cal.appendChild(el('div','hd',h));});
     for(var b=0;b<r.days[0].dow;b++){cal.appendChild(el('div'));}
     r.days.forEach(function(o){
-      var ci=cellInfo(o),c=el('div','cell'+(ci.kind?' '+ci.kind:''));
+      var ci=cellInfo(o),c=el('div','cell'+(ci.kind?' '+ci.kind:'')+(ci.rest?' rest':''));
       c.appendChild(el('b','',String(o.d)));
-      ci.L.forEach(function(l){c.appendChild(el('span',{time:'t',half:'t',hol:'hol'}[l.type]||'',l.t));});
+      ci.L.forEach(function(l){c.appendChild(el('span',l.type==='hol'?('hol'+(l.rest?' rest':'')):(l.type==='time'?'t':''),l.t));});
       c.addEventListener('click',function(){$('cuDate').value=DATA.month+'-'+pad2(o.d);$('cuType').focus();});
       cal.appendChild(c);
     });

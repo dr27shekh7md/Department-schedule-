@@ -1,0 +1,292 @@
+<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"></head><body><title>עוד חודש במחלקה - דשבורד מנהלים</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=Rubik:wght@500;700&display=swap">
+<style>
+/* Layout: one narrow column. Pick yourself once, then read the month: duties, drills, talks, a board-colored month grid, messages to copy. */
+:root{
+  --bg:#f1f4f8; --surface:#ffffff; --ink:#16212e; --muted:#566475; --line:#d5dce6;
+  --duty:#1d5fa7; --duty-ink:#ffffff; --weekend:#d3e4f6; --home:#2c7a58; --home-bg:#dff1e8;
+  --early:#a45c00; --early-bg:#fdecd2; --warn:#a3271f; --warn-bg:#fbe4e1; --red:#b3261e; --hol:#f5c400; --hol-edge:#1d5fa7;
+  --display:"Rubik","Heebo","Arial Hebrew",Arial,sans-serif; --body:"Heebo","Arial Hebrew",Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#10161e; --surface:#19222d; --ink:#e8edf3; --muted:#9aa8b8; --line:#2e3a48;
+  --duty:#6aa9ea; --duty-ink:#0c1620; --weekend:#22354b; --home:#6fcf9f; --home-bg:#17382b;
+  --early:#f0b35a; --early-bg:#40300f; --warn:#ff9a90; --warn-bg:#44201c; --red:#c93a30; --hol:#ffd633; --hol-edge:#6aa9ea; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#10161e; --surface:#19222d; --ink:#e8edf3; --muted:#9aa8b8; --line:#2e3a48;
+  --duty:#6aa9ea; --duty-ink:#0c1620; --weekend:#22354b; --home:#6fcf9f; --home-bg:#17382b;
+  --early:#f0b35a; --early-bg:#40300f; --warn:#ff9a90; --warn-bg:#44201c; --red:#c93a30; --hol:#ffd633; --hol-edge:#6aa9ea; color-scheme:dark }
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;margin:0}
+.wrap{max-width:720px;margin:0 auto;padding-block:20px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:20px}
+h1{font-family:var(--display);font-size:1.7rem;line-height:1.2;margin:0;text-wrap:balance}
+h2{font-family:var(--display);font-size:1.2rem;margin:0;text-wrap:balance;color:var(--duty)}
+h3{font-size:.95rem;margin:0;font-weight:700}
+p{margin:0}
+.sub{color:var(--muted);font-size:.95rem}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.row{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:end}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--muted);min-width:0}
+select,button{font:inherit;color:inherit}
+select{background:var(--bg);border:2px solid var(--duty);border-radius:6px;padding:8px 10px;min-width:160px;max-width:100%;font-size:1.05rem}
+select:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--duty);outline-offset:2px}
+button{cursor:pointer;border-radius:6px;border:1px solid var(--line);background:var(--surface);padding:4px 12px;font-size:.88rem}
+.checks{display:flex;flex-direction:column;gap:6px}
+.check{display:flex;gap:8px;align-items:center;font-size:.95rem}
+.note{font-size:.85rem;color:var(--muted)}
+.warns{background:var(--warn-bg);color:var(--warn);border-radius:8px;padding:10px 14px;font-size:.92rem;display:flex;flex-direction:column;gap:4px}
+.list{display:flex;flex-direction:column;gap:0;font-variant-numeric:tabular-nums}
+.item{display:grid;grid-template-columns:118px 1fr;gap:4px 12px;padding:8px 0;border-top:1px solid var(--line)}
+.item:first-child{border-top:0;padding-top:0}
+.item .when{font-weight:700}
+.item .what b{color:var(--duty)}
+.item .with{grid-column:2;font-size:.85rem;color:var(--muted)}
+@media (max-width:420px){.item{grid-template-columns:1fr}.item .with{grid-column:1}}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;font-variant-numeric:tabular-nums}
+.cal .hd{font-size:.75rem;color:var(--muted);text-align:center;padding-bottom:2px}
+.cell{border:1px solid var(--line);border-radius:6px;min-height:58px;padding:4px 5px;display:flex;flex-direction:column;gap:2px;font-size:.72rem;line-height:1.25;min-width:0;overflow-wrap:anywhere}
+.cell b{font-size:.9rem}
+.cell.we{background:var(--weekend);border-color:transparent}
+.cell.duty{background:var(--duty);color:var(--duty-ink);border-color:var(--duty)}
+.cell.home{background:var(--home-bg);color:var(--home);border-color:transparent}
+.cell .t{background:var(--early-bg);color:var(--early);border-radius:4px;padding:0 4px;align-self:flex-start;font-weight:700}
+.cell.duty .t{background:var(--duty-ink);color:var(--duty)}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:.82rem;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-inline-end:4px}
+.msg{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.msg-head{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--line);background:var(--bg)}
+.msg pre{margin:0;padding:12px;white-space:pre-wrap;overflow-wrap:anywhere;font-family:var(--body);font-size:.95rem;direction:rtl;text-align:right;font-variant-numeric:tabular-nums}
+.empty{background:var(--duty);color:var(--duty-ink);border-color:var(--duty);text-align:center;padding:24px 16px;font-family:var(--display);font-weight:700;font-size:1.2rem;line-height:1.4}
+.hero{background:var(--duty);color:var(--duty-ink);border-radius:10px;padding:18px 16px}
+.hero .sub{color:var(--duty-ink);opacity:.9}
+input[type=checkbox]{accent-color:var(--duty);width:18px;height:18px}
+.item .what b.red{color:var(--warn)}
+.item .with em{font-style:normal;color:var(--home);font-weight:700}
+
+.acts{display:flex;gap:6px;align-items:center;flex-shrink:0}
+.wa{background:var(--home);color:var(--surface);border-radius:6px;padding:5px 12px;font-size:.88rem;text-decoration:none;font-weight:700;white-space:nowrap}
+.wa:focus-visible{outline:2px solid var(--duty);outline-offset:2px}
+
+.cell .t{white-space:nowrap;overflow-wrap:normal;font-size:.68rem;padding:0 3px;letter-spacing:-.01em}
+.cell span{overflow-wrap:normal}
+
+.cell .hol{color:var(--warn);font-weight:700}
+.cell.duty .hol{color:var(--duty-ink);text-decoration:underline}
+.item .with.hol{color:var(--warn);font-weight:700}
+
+input[type=number],input[type=text]{font:inherit;color:inherit;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:7px 9px;max-width:100%}
+
+.pick{color:var(--warn);font-weight:700;font-size:1.05rem}
+details{border-top:1px solid var(--line);padding-top:8px}
+details>summary{cursor:pointer;font-weight:700;color:var(--duty);font-size:.95rem}
+details[open]>summary{margin-bottom:8px}
+.checks.two{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px}
+.checks.two .check{font-size:.9rem;align-items:flex-start;min-width:0}
+.cal .cell{cursor:pointer}
+
+.item .with .p{display:block}
+.item .with .g{display:block;font-weight:700;color:var(--ink);margin-top:2px}
+.tel{color:var(--duty);font-weight:700;white-space:nowrap;direction:ltr;unicode-bidi:isolate;margin-inline-start:6px}
+
+.cell.duty{background:var(--red);color:#fff;border-color:var(--red)}
+.cell.duty .t{background:#fff;color:var(--red)}
+.cell .hol,.cell.duty .hol{background:var(--hol);color:#12396b;border:1px solid var(--hol-edge);border-radius:4px;padding:0;margin:0 -4px;align-self:stretch;text-align:center;font-size:.62rem;line-height:1.2;font-weight:700;text-decoration:none;overflow-wrap:break-word}
+#dutyList .what b{color:var(--red);font-size:1.05rem}
+.item .with .p{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;padding:3px 0}
+.item .with .p .r{color:var(--red);font-weight:700}
+.item .with .p .n{color:var(--ink);font-weight:700;font-size:1.02rem}
+.tel{margin-inline-start:0}
+input[type=date]{font:inherit;color:inherit;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:7px 9px;max-width:100%}
+#cuType{min-width:0;font-size:1rem;border-width:1px;padding:7px 9px}
+#chart svg{width:100%;height:auto;max-width:420px;display:block;margin:0 auto}
+
+.hero{text-align:center}
+.hero h1{font-size:1.9rem}
+.hero .month{font-family:var(--display);font-weight:700;font-size:1.5rem;line-height:1.3;margin:8px auto;display:table;background:var(--hol);color:#12396b;border-radius:8px;padding:2px 18px}
+.hero .sub{display:block}
+.item .with .g.gs{font-size:1rem;color:var(--duty);border-top:1px dashed var(--line);margin-top:6px;padding-top:6px}
+.item .with .p.half .r{font-size:1rem}
+.item .with .p.half .n{font-size:1.18rem}
+.item .with .p.oncall{padding:1px 0}
+.item .with .p.oncall .r{color:var(--duty);font-size:.82rem}
+.item .with .p.oncall .n{font-size:.88rem;font-weight:500}
+.item .with .p.oncall .tel{font-size:.85rem;font-weight:500}
+#dutyList .what b.oncall{color:var(--duty)}
+.cell.oncall{background:var(--duty);color:var(--duty-ink);border-color:var(--duty)}
+.cell .hol,.cell.duty .hol{margin-top:auto;border:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cell .hol~.hol{margin-top:0}
+.cell .hol.rest,.cell.duty .hol.rest{border:1px solid var(--hol-edge)}
+.cell.rest{outline:3px solid var(--hol);outline-offset:-3px}
+details.card{display:block;padding:14px 16px;border:1px solid var(--line)}
+details.card>summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px;margin:0}
+details.card>summary::-webkit-details-marker{display:none}
+details.card>summary h2{display:inline}
+details.card>summary::after{content:"הצג";font-size:.85rem;font-weight:700;color:var(--duty);border:1px solid var(--line);border-radius:6px;padding:2px 12px}
+details.card[open]>summary::after{content:"הסתר"}
+details.card[open]>summary{margin-bottom:0}
+.foldin{display:flex;flex-direction:column;gap:14px;margin-top:14px}
+#statBox{display:flex;flex-direction:column;gap:2px;font-size:.95rem}
+#statBox b{font-size:1.05rem}
+.how li{margin-bottom:2px}
+
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:.9rem}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:center;white-space:nowrap}
+th{font-size:.76rem;color:var(--muted);font-weight:700;vertical-align:bottom;white-space:normal;min-width:48px}
+td.nm,th.nm{text-align:right;font-weight:700;position:sticky;right:0;background:var(--surface)}
+tr.avg td{font-weight:700;background:var(--bg)}
+tr.avg td.nm{background:var(--bg)}
+td.hi{background:var(--warn-bg);color:var(--warn);font-weight:700}
+td.lo{background:var(--home-bg);color:var(--home);font-weight:700}
+td.tot{font-weight:700}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+.bar{display:inline-block;height:10px;border-radius:3px;background:var(--red);vertical-align:middle;margin-inline-start:6px}
+.tabs{display:flex;gap:8px}
+.tabs button{padding:8px 16px;font-weight:700;font-size:.95rem}
+.tabs button[aria-pressed=true]{background:var(--duty);color:var(--duty-ink);border-color:var(--duty)}
+</style>
+<div class="wrap" dir="rtl" lang="he" style="max-width:900px">
+  <header class="hero">
+    <h1>עוד חודש במחלקה</h1>
+    <p class="month">דשבורד מנהלים</p>
+    <p class="sub">מחלקת הרדמה · מבט מחלקתי על תורנויות וכוננויות</p>
+  </header>
+
+  <section class="card" id="gate">
+    <h2>כניסה</h2>
+    <p class="sub">הדף הזה מיועד להנהלת המחלקה. הנתונים מוצגים רק אחרי הקלדת קוד המנהלים.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+      <input type="text" id="code" placeholder="קוד מנהלים" aria-label="קוד מנהלים" autocomplete="off" autocapitalize="off" style="width:190px;direction:ltr">
+      <button id="open" style="padding:7px 16px;font-weight:700">כניסה</button>
+    </div>
+    <p class="note" id="gnote" role="status"></p>
+  </section>
+
+  <div id="dash" hidden style="display:flex;flex-direction:column;gap:20px">
+    <section class="card">
+      <div class="tabs"><button id="tR" aria-pressed="true">מתמחים</button><button id="tS" aria-pressed="false">בכירים</button></div>
+      <p class="note" id="scope"></p>
+    </section>
+
+    <section class="card">
+      <h2 id="tblTitle"></h2>
+      <p class="sub" id="tblSub"></p>
+      <div class="scroll"><table id="tbl"></table></div>
+      <div class="legend"><span><i style="background:var(--warn-bg);border:1px solid var(--warn)"></i>מעל הממוצע ב־2 או יותר</span><span><i style="background:var(--home-bg);border:1px solid var(--home)"></i>מתחת לממוצע ב־2 או יותר</span></div>
+    </section>
+
+    <section class="card">
+      <h2>מעקב לפי רופא</h2>
+      <label class="f" for="who" style="color:var(--duty);font-weight:700;font-size:.95rem">בחרו שם<select id="who"></select></label>
+      <div class="list" id="detail"></div>
+    </section>
+
+    <section class="card">
+      <h2>מה אין כאן</h2>
+      <ul class="note" style="margin:0;padding-inline-start:18px">
+        <li>ימי חופשה, מחלה וספרייה לא מופיעים. כל רופא מסמן אותם במכשיר שלו בלבד, והם לא נשלחים לשום מקום.</li>
+        <li>הנתונים נקראו מצילומי הלוחות, ולכן ייתכנו טעויות קריאה. הלוח של המחלקה הוא הקובע.</li>
+        <li>חודשים נוספים יתווספו עם כל לוח חדש.</li>
+      </ul>
+    </section>
+  </div>
+</div>
+
+<script>
+(function(){
+  document.documentElement.lang='he';document.documentElement.dir='rtl';
+  var ENC='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';
+  var $=function(id){return document.getElementById(id);},D=null,mode='R';
+  var HEB_MONTH=['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+  var HEB_DOW=['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
+  var RC=['תורן 1','תורן 2','תורן 3','אגף נשים'],SC=['כונן 1','כונן 2','כונן 3','תורן מומחה'];
+  function el(tag,cls,text){var x=document.createElement(tag);if(cls){x.className=cls;}if(text!=null){x.textContent=text;}return x;}
+  function pad2(n){return String(n).padStart(2,'0');}
+  function ml(m){var p=m.split('-');return HEB_MONTH[+p[1]-1]+' '+p[0];}
+  function cn(n){return (D.aliases&&D.aliases[n])||n;}
+  function dow(m,d){var p=m.split('-');return new Date(Date.UTC(+p[0],+p[1]-1,d)).getUTCDay();}
+  function b64(s){var bin=atob(s),u=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++){u[i]=bin.charCodeAt(i);}return u;}
+  function unlock(code,quiet){
+    var note=$('gnote');
+    if(!(window.crypto&&crypto.subtle&&window.TextEncoder)){note.textContent='הדפדפן הזה לא יכול לפתוח את הדף. פתחו אותו בכרום או בספארי.';return;}
+    if(!quiet){note.textContent='פותח...';}
+    var raw=b64(ENC),salt=raw.slice(0,16),iv=raw.slice(16,28),ct=raw.slice(28);
+    crypto.subtle.importKey('raw',new TextEncoder().encode(code),'PBKDF2',false,['deriveKey']).then(function(k){
+      return crypto.subtle.deriveKey({name:'PBKDF2',salt:salt,iterations:600000,hash:'SHA-256'},k,{name:'AES-GCM',length:256},false,['decrypt']);
+    }).then(function(k){return crypto.subtle.decrypt({name:'AES-GCM',iv:iv},k,ct);}).then(function(buf){
+      D=JSON.parse(new TextDecoder().decode(buf));
+      try{sessionStorage.setItem('luach.dash',code);}catch(e){}
+      $('gate').hidden=true;$('dash').hidden=false;render();
+    }).catch(function(){if(!quiet){note.textContent='הקוד לא נכון.';}});
+  }
+  $('open').addEventListener('click',function(){var c=$('code').value.trim().toLowerCase();if(c){unlock(c,false);}else{$('code').focus();}});
+  $('code').addEventListener('keydown',function(e){if(e.key==='Enter'){$('open').click();}});
+  try{var sc=sessionStorage.getItem('luach.dash');if(sc){unlock(sc,true);}}catch(e){}
+
+  function people(key){
+    var s={};D.months.forEach(function(m){(m[key]||[]).forEach(function(r){r.forEach(function(n){s[cn(n)]=1;});});});
+    return Object.keys(s).sort(function(a,b){return a.localeCompare(b,'he');});
+  }
+  function stat(m,key,name){
+    var o={t:0,we:0,th:0,role:[0,0,0,0],days:[]};
+    (m[key]||[]).forEach(function(r,i){r.forEach(function(n,c){if(cn(n)===name){var w=dow(m.month,i+1);o.t++;o.role[c]++;if(w>=5){o.we++;}if(w===4){o.th++;}o.days.push({d:i+1,w:w,c:c});}});});
+    return o;
+  }
+  function render(){
+    var key=mode==='R'?'res':'sen',cols=mode==='R'?RC:SC,ms=D.months.filter(function(m){return m[key];}),cur=ms[ms.length-1],names=people(key);
+    $('tR').setAttribute('aria-pressed',mode==='R');$('tS').setAttribute('aria-pressed',mode==='S');
+    $('scope').textContent='חודשים בנתונים: '+ms.map(function(m){return ml(m.month);}).join(', ')+'. '+names.length+' רופאים.';
+    $('tblTitle').textContent=mode==='R'?'טבלת תורנויות - מתמחים':'טבלת כוננויות ותורנויות - בכירים';
+    $('tblSub').textContent='סה״כ לכל חודש, ופירוט של '+ml(cur.month)+'. ממוין לפי הסה״כ, מהגבוה לנמוך.';
+    var rows=names.map(function(n){
+      var per=ms.map(function(m){return stat(m,key,n);}),tot=0,we=0;per.forEach(function(p){tot+=p.t;we+=p.we;});
+      return {n:n,per:per,tot:tot,we:we,cur:per[per.length-1]};
+    }).sort(function(a,b){return b.tot-a.tot||a.n.localeCompare(b.n,'he');});
+    function mean(f){return rows.reduce(function(s,r){return s+f(r);},0)/rows.length;}
+    var avgCur=mean(function(r){return r.cur.t;}),avgTot=mean(function(r){return r.tot;}),mx=Math.max.apply(null,rows.map(function(r){return r.tot;}))||1;
+    var curName=HEB_MONTH[+cur.month.slice(5)-1];
+    var t=$('tbl');t.textContent='';
+    var hr=el('tr');hr.appendChild(el('th','nm','שם'));
+    ms.forEach(function(m){hr.appendChild(el('th','',ml(m.month)));});
+    if(ms.length>1){hr.appendChild(el('th','','סה״כ'));hr.appendChild(el('th','','שישי-שבת, כל החודשים'));}
+    hr.appendChild(el('th','','שישי-שבת, '+curName));hr.appendChild(el('th','','חמישי, '+curName));
+    cols.forEach(function(c){hr.appendChild(el('th','',c+', '+curName));});
+    var th=el('thead');th.appendChild(hr);t.appendChild(th);
+    var tb=el('tbody');
+    function flag(v,avg){return v>=avg+2?'hi':(v<=avg-2?'lo':'');}
+    rows.forEach(function(r){
+      var tr=el('tr');tr.appendChild(el('td','nm',r.n));
+      r.per.forEach(function(p,i){tr.appendChild(el('td',i===r.per.length-1?flag(p.t,avgCur):'',String(p.t)));});
+      if(ms.length>1){var td=el('td','tot '+flag(r.tot,avgTot),String(r.tot));var b=el('span','bar');b.style.width=Math.round(r.tot/mx*40)+'px';td.appendChild(b);tr.appendChild(td);tr.appendChild(el('td','',String(r.we)));}
+      tr.appendChild(el('td','',String(r.cur.we)));tr.appendChild(el('td','',String(r.cur.th)));
+      r.cur.role.forEach(function(v){tr.appendChild(el('td','',v?String(v):'-'));});
+      tb.appendChild(tr);
+    });
+    var av=el('tr','avg');av.appendChild(el('td','nm','ממוצע'));
+    ms.forEach(function(m,i){av.appendChild(el('td','',mean(function(r){return r.per[i].t;}).toFixed(1)));});
+    if(ms.length>1){av.appendChild(el('td','',avgTot.toFixed(1)));av.appendChild(el('td','',mean(function(r){return r.we;}).toFixed(1)));}
+    av.appendChild(el('td','',mean(function(r){return r.cur.we;}).toFixed(1)));av.appendChild(el('td','',mean(function(r){return r.cur.th;}).toFixed(1)));
+    cols.forEach(function(c,i){av.appendChild(el('td','',mean(function(r){return r.cur.role[i];}).toFixed(1)));});
+    tb.appendChild(av);t.appendChild(tb);
+    var sel=$('who'),keep=sel.value;sel.textContent='';sel.appendChild(new Option('בחרו שם...',''));
+    names.forEach(function(n){sel.appendChild(new Option(n,n));});if(names.indexOf(keep)>=0){sel.value=keep;}
+    detail();
+  }
+  function detail(){
+    var key=mode==='R'?'res':'sen',cols=mode==='R'?RC:SC,n=$('who').value,box=$('detail');box.textContent='';
+    if(!n){box.appendChild(el('p','note','בחרו שם כדי לראות את התאריכים שלו בכל חודש.'));return;}
+    D.months.filter(function(m){return m[key];}).forEach(function(m){
+      var s=stat(m,key,n),it=el('div','item');
+      it.appendChild(el('span','when',ml(m.month)));
+      var w=el('span','what');w.appendChild(el('b','',s.t+' סה״כ, מתוכן '+s.we+' בשישי-שבת'));it.appendChild(w);
+      it.appendChild(el('span','with',s.days.length?s.days.map(function(x){return pad2(x.d)+'/'+m.month.slice(5)+' '+HEB_DOW[x.w]+' - '+cols[x.c];}).join(' · '):'אין שיבוץ בחודש זה.'));
+      box.appendChild(it);
+    });
+  }
+  $('who').addEventListener('change',detail);
+  $('tR').addEventListener('click',function(){mode='R';render();});
+  $('tS').addEventListener('click',function(){mode='S';render();});
+})();
+</script>
+</body></html>
