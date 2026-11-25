@@ -18,6 +18,7 @@
   --duty:#6aa9ea; --duty-ink:#0c1620; --weekend:#22354b; --home:#6fcf9f; --home-bg:#17382b;
   --early:#f0b35a; --early-bg:#40300f; --warn:#ff9a90; --warn-bg:#44201c; color-scheme:dark }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;margin:0}
 .wrap{max-width:720px;margin:0 auto;padding-block:20px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:20px}
 h1{font-family:var(--display);font-size:1.7rem;line-height:1.2;margin:0;text-wrap:balance}
@@ -76,6 +77,14 @@ input[type=checkbox]{accent-color:var(--duty);width:18px;height:18px}
 .item .with.hol{color:var(--warn);font-weight:700}
 
 input[type=number],input[type=text]{font:inherit;color:inherit;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:7px 9px;max-width:100%}
+
+.pick{color:var(--warn);font-weight:700;font-size:1.05rem}
+details{border-top:1px solid var(--line);padding-top:8px}
+details>summary{cursor:pointer;font-weight:700;color:var(--duty);font-size:.95rem}
+details[open]>summary{margin-bottom:8px}
+.checks.two{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px}
+.checks.two .check{font-size:.9rem;align-items:flex-start;min-width:0}
+.cal .cell{cursor:pointer}
 </style>
 <div class="wrap" dir="rtl" lang="he">
   <header class="hero">
@@ -83,37 +92,28 @@ input[type=number],input[type=text]{font:inherit;color:inherit;background:var(--
     <p class="sub" id="monthLine"></p>
   </header>
 
-  <section class="card" aria-labelledby="who">
-    <h2 id="who">מי אני</h2>
-    <div class="row">
-      <label class="f" for="name" style="color:var(--duty);font-weight:700;font-size:.95rem">השם שלי בלוח<select id="name"></select></label>
-    </div>
-    <div class="checks" id="holBox"><span style="font-weight:700;color:var(--duty);font-size:.95rem">חגים להצגה בלוח</span>
-      <label class="check" for="hJ"><input type="checkbox" id="hJ" checked>חגי העדה היהודית <span class="note" id="hJn"></span></label>
-      <label class="check" for="hC"><input type="checkbox" id="hC" checked>חגי העדה הנוצרית <span class="note" id="hCn"></span></label>
-      <label class="check" for="hM"><input type="checkbox" id="hM" checked>חגי העדה המוסלמית <span class="note" id="hMn"></span></label>
-      <label class="check" for="hD"><input type="checkbox" id="hD" checked>חגי העדה הדרוזית <span class="note" id="hDn"></span></label>
-      <label class="check" for="hN"><input type="checkbox" id="hN" checked>ימים לאומיים <span class="note" id="hNn"></span></label>
-      <div style="display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line);padding-top:10px;margin-top:4px">
-        <span style="font-weight:700;font-size:.92rem">אחר - מועד אישי (למשל כנס)</span>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
-          <input type="number" id="cuDay" min="1" max="31" placeholder="יום" aria-label="יום בחודש" style="width:72px">
-          <input type="text" id="cuName" placeholder="מה יש ביום הזה" aria-label="שם המועד" style="flex:1;min-width:140px">
-          <button id="cuAdd" style="padding:7px 14px">הוסף</button>
-        </div>
-        <div id="cuList" style="display:flex;flex-direction:column;gap:4px"></div>
-        <span class="note">מועד אישי נשמר במכשיר הזה בלבד ולא נראה לאחרים.</span>
+  <section class="card" aria-label="בחירת שם והגדרות" style="gap:10px;padding:12px 14px">
+    <label class="f" for="name" style="color:var(--duty);font-weight:700;font-size:.95rem">השם שלי בלוח<select id="name"></select></label>
+    <p class="pick" id="empty">בחרו שם כדי להציג את הכוננויות והתורנויות שלכם</p>
+    <details><summary>חגים ומועדים בלוח</summary>
+      <div class="checks two" id="holBox">
+        <label class="check" for="hJ"><input type="checkbox" id="hJ" checked>העדה היהודית <span class="note" id="hJn"></span></label>
+        <label class="check" for="hC"><input type="checkbox" id="hC" checked>העדה הנוצרית <span class="note" id="hCn"></span></label>
+        <label class="check" for="hM"><input type="checkbox" id="hM" checked>העדה המוסלמית <span class="note" id="hMn"></span></label>
+        <label class="check" for="hD"><input type="checkbox" id="hD" checked>העדה הדרוזית <span class="note" id="hDn"></span></label>
+        <label class="check" for="hN"><input type="checkbox" id="hN" checked>ימים לאומיים <span class="note" id="hNn"></span></label>
+        <label class="check" for="hP"><input type="checkbox" id="hP" checked>מועדים מחלקתיים <span class="note" id="hPn"></span></label>
       </div>
-    </div>
-    <ul class="note" style="margin:0;padding-inline-start:18px;display:flex;flex-direction:column;gap:4px">
+    </details>
+    <details><summary>איך הלוח עובד</summary>
+      <ul class="note" style="margin:0;padding-inline-start:18px;display:flex;flex-direction:column;gap:4px">
       <li>הדף מוצא לפי השם את הכוננויות (כונן 1, 2, 3) ואת תורנויות המומחה שלך.</li>
       <li>ישיבות שהשם שלך מופיע בהן בעמודת "מציג" מסומנות בנפרד.</li>
       <li>ישיבת צוות בימי חמישי ב־07:00 היא לכולם.</li>
       <li style="color:var(--warn);font-weight:700">אם משהו לא תואם, הלוח של המחלקה הוא הקובע.</li>
     </ul>
+    </details>
   </section>
-
-  <div class="card empty" id="empty">בחרו שם כדי לראות את הכוננויות, התורנויות והישיבות שלכם לחודש.</div>
 
   <div id="out" hidden style="display:flex;flex-direction:column;gap:20px">
     <section class="card" aria-labelledby="hd">
@@ -133,6 +133,16 @@ input[type=number],input[type=text]{font:inherit;color:inherit;background:var(--
         <span><i style="background:var(--weekend)"></i>שישי-שבת</span>
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><a class="wa" id="icsBtn" download="luach.ics" style="background:var(--duty);color:var(--duty-ink)">הוסף ליומן שלי</a><span class="note">מוריד קובץ יומן עם מה שמוצג כאן, כולל החגים שסימנת.</span></div>
+      <div style="display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line);padding-top:10px">
+        <span style="font-weight:700;font-size:.95rem;color:var(--duty)">מועד אישי (חתונה, כנס, חופשה)</span>
+        <span class="note">לחצו על יום בלוח או הקלידו אותו, כתבו מה יש בו, והוסיפו. נשמר במכשיר הזה בלבד ולא נראה לאחרים.</span>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+          <input type="number" id="cuDay" min="1" max="31" placeholder="יום" aria-label="יום בחודש" style="width:72px">
+          <input type="text" id="cuName" placeholder="מה יש ביום הזה" aria-label="שם המועד" style="flex:1;min-width:140px">
+          <button id="cuAdd" style="padding:7px 14px">הוסף</button>
+        </div>
+        <div id="cuList" style="display:flex;flex-direction:column;gap:4px"></div>
+      </div>
     </section>
     <section class="card" aria-labelledby="hm">
       <h2 id="hm">הודעות מוכנות להעתקה</h2>
@@ -272,10 +282,10 @@ if(typeof module!=='undefined'){module.exports={build:build,allNames:allNames,DA
   allNames(DATA).forEach(function(n){sel.appendChild(new Option(n,n));});
   var p=DATA.month.split('-');
   $('monthLine').textContent=HEB_MONTH[+p[1]-1]+' '+p[0]+' · מחלקת הרדמה · לפי לוח התורנויות ולוח ישיבות הצוות שפורסמו';
-  var H={J:true,C:true,M:true,D:true,N:true,X:true};
-  ['J','C','M','D','N'].forEach(function(k){
+  var H={J:true,C:true,M:true,D:true,N:true,P:true,X:true};
+  ['J','C','M','D','N','P'].forEach(function(k){
     var n=(DATA.holidays||[]).filter(function(h){return h.g===k;}).length;
-    $('h'+k+'n').textContent=n?'':'(אין בחודש זה)';
+    $('h'+k+'n').textContent=n?'':'(אין החודש)';
     $('h'+k).addEventListener('change',function(){H[k]=$('h'+k).checked;render();});
   });
   var CK='luach.custom.'+DATA.month,baseHol=(DATA.holidays||[]).slice(),custom=[],nDays=(DATA.roster||DATA.senior).length;
@@ -326,6 +336,7 @@ if(typeof module!=='undefined'){module.exports={build:build,allNames:allNames,DA
       var c=el('div','cell'+(o.col&&!o.half?' duty':o.weekend?' we':''));
       c.appendChild(el('b','',String(o.d)));
       o.hol.forEach(function(x){c.appendChild(el('span','hol',x.short));});
+      c.addEventListener('click',function(){$('cuDay').value=o.d;$('cuName').focus();});
       if(o.col){c.appendChild(el('span',o.half?'t':'',o.half?'מומחה':o.col));}
       cal.appendChild(c);
     });
