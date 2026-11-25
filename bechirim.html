@@ -85,6 +85,10 @@ details[open]>summary{margin-bottom:8px}
 .checks.two{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px}
 .checks.two .check{font-size:.9rem;align-items:flex-start;min-width:0}
 .cal .cell{cursor:pointer}
+
+.item .with .p{display:block}
+.item .with .g{display:block;font-weight:700;color:var(--ink);margin-top:2px}
+.tel{color:var(--duty);font-weight:700;white-space:nowrap;direction:ltr;unicode-bidi:isolate;margin-inline-start:6px}
 </style>
 <div class="wrap" dir="rtl" lang="he">
   <header class="hero">
@@ -104,6 +108,13 @@ details[open]>summary{margin-bottom:8px}
         <label class="check" for="hN"><input type="checkbox" id="hN" checked>ימים לאומיים <span class="note" id="hNn"></span></label>
         <label class="check" for="hP"><input type="checkbox" id="hP" checked>מועדים מחלקתיים <span class="note" id="hPn"></span></label>
       </div>
+    </details>
+    <details id="telBox"><summary>טלפונים של הצוות</summary>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+        <input type="text" inputmode="numeric" id="telCode" placeholder="קוד מחלקתי" aria-label="קוד מחלקתי" autocomplete="off" style="width:150px">
+        <button id="telOpen" style="padding:7px 14px">פתח</button>
+      </div>
+      <span class="note" id="telNote" role="status" style="display:block;margin-top:6px">הטלפונים של מי שתורן וכונן איתך מוצגים רק אחרי הקלדת הקוד שנשלח בקבוצת המחלקה. הקוד נשמר במכשיר הזה.</span>
     </details>
     <details><summary>איך הלוח עובד</summary>
       <ul class="note" style="margin:0;padding-inline-start:18px;display:flex;flex-direction:column;gap:4px">
@@ -168,6 +179,7 @@ var DATA={
     {day:24,g:'C',name:'ערב חג המולד',short:'ערב חג המולד'},
     {day:25,g:'C',name:'חג המולד',short:'חג המולד'},
     {day:31,g:'C',name:'ערב השנה האזרחית',short:'ערב שנה אזרחית'}],
+  phonesEnc:'Rcgvpa03KVdj8IsaJgbRjQtupPVtbYv6TMaUYPe4SM7X0sHMRt/fmTyMow9xOLqjgWaLQtt5zpJtPeeF/ZyJPb/Z1IIk/IfV4RFJ0+EDms25CtI0KY3L8nwmmrv7ZWG0tqeTo98Lw8boJ7x2RGhQpjQ5bjNXB81172eL1044rtpbtZU37qY+J8kUuKEnor3+gekH+XmDzTUoiMK9qTcIbis5G4JrWw+TZmRaVOpahhNuNAwWkGizfJjpU5JHoPRNPKLD1mGuvVCZpMq+Darvh2fj3TnbXnyK3qLXZyfySKGl7miU+DaBEYwSfErlGCvAmyh25Cz0GZf3SaACdkXIefy3enyLdCJWp1hGQ3FQcaLPPodzzNQLtNwLrPYY99W7tkNuY57P7SnC8320JJR/OiUWAIKuEr2auvxQgU4HlejKALmoojK7ts2MOmxUy3SYLGpJXxoSvoOuPfFOWxLeOpFOi57YlPTFxOKDToSisprk2ByQxgI4kuQys8DjQlFUlOM6JwORAdxb9pM13Xc8EMNHn8nElszEymxupGz+YrvdkvqYY8dqkY01VATeDCRH6KCub05nn/XH2DgXdnH4eOUUqbscTqfz9epIoSXfVv5Wh8spkjMBfoX67bf5MXF7m77L/6PcaDp6CGlr+QdQEvSwvlg8hlr5xV4FbKLHzOla81jxPrmvz6yX74BaZDrWR/4rK4PEwPZloDWj002GWj8Lk4ZCK0ffQrt3p6R2yanlbtFDFFX6eXvB+LfpPHC1ihEah6/1ctMC116i/6bcsEowSk4edVtgSnvSsQ/ORNcXsJS8g9Q2KVeljPpKR2GdzoviioRGe/7YGFRxMe6FdEm1OCSjrxSdxrLxjfi+8e81YLXH3G4Ypi7wdeY/9q+5D97/aTXbU1lADqJ3flVR0zXko/T7u4FpyPe9FF1udeodtkh6p5E9lQTv5f/rGgSHU0H1TTUfBT8Bzc0X7whpWTPy+ihJ3svZwk263Yai1JAInjl8wcXienuabtTYo+DkTTgwOXy+SeO0VywXSsUo+sIpLa0XmPBHj+sA5w+7lXLIjjnyFM8R3o7CivDFdlnA5i5Cb4LQBuQ1Al/lvHUo2Aa5iJLUCK1gY0fPVTyhag9btb7RdHxECz64SknyfIGc9tQyp8IA7AL2CXq1+TlPCxgAc+kFFbk1AuAiAWDFCrtz4c4x8ZKQWngFZp3GBX9vCnWblYQVuRqb',
   senior:[
     ['דביר','מריסאת','ארזומנוב','וילנר'],['מריסאת','זברב','וילנר','ארזומנוב'],['דביר','זייבק','ארזומנוב','מריסאת'],
     ['זברב','זיוד','וילנר','גברילוב'],['זיוד','דביר','וילנר','מריסאת'],['זייבק','גברילוב','מוקבל','זברב'],
@@ -289,6 +301,42 @@ if(typeof module!=='undefined'){module.exports={build:build,allNames:allNames,DA
     $('h'+k+'n').textContent=n?'':'(אין החודש)';
     $('h'+k).addEventListener('change',function(){H[k]=$('h'+k).checked;render();});
   });
+  var PH=null;
+  function cn(n){return (DATA.aliases&&DATA.aliases[n])||n;}
+  function teamOf(d){
+    var self=(typeof me==='string'?me:me.name),out=[],RC=['תורן 1','תורן 2','תורן 3','אגף נשים'],SC=['כונן 1','כונן 2','כונן 3','תורן מומחה'];
+    (DATA.roster||DATA.residents)[d-1].forEach(function(n,i){n=cn(n);if(n!==self){out.push({g:'תורנים',role:RC[i],name:n});}});
+    [3,0,1,2].forEach(function(i){var n=DATA.senior[d-1][i];if(n!==self){out.push({g:'בכירים',role:SC[i],name:n});}});
+    return out;
+  }
+  function fmtTel(t){return t.slice(0,3)+'-'+t.slice(3,6)+'-'+t.slice(6);}
+  function teamText(d){return teamOf(d).map(function(x){return x.role+' - '+x.name+(PH&&PH[x.name]?' '+fmtTel(PH[x.name]):'');}).join('\n');}
+  function addTeam(it,d){
+    var box=el('span','with'),last='';
+    teamOf(d).forEach(function(x){
+      if(x.g!==last){box.appendChild(el('span','g',x.g+' איתך'));last=x.g;}
+      var p=el('span','p',x.role+' - '+x.name);
+      if(PH&&PH[x.name]){var a=el('a','tel',fmtTel(PH[x.name]));a.href='tel:+972'+PH[x.name].slice(1);p.appendChild(a);}
+      box.appendChild(p);
+    });
+    it.appendChild(box);
+  }
+  function b64(s){var bin=atob(s),u=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++){u[i]=bin.charCodeAt(i);}return u;}
+  function unlock(code,quiet){
+    var note=$('telNote');
+    if(!(window.crypto&&crypto.subtle&&window.TextEncoder)){if(!quiet){note.textContent='הדפדפן הזה לא יכול לפתוח את הטלפונים. פתחו את האתר בכרום או בספארי.';}return;}
+    if(!quiet){note.textContent='פותח...';}
+    var raw=b64(DATA.phonesEnc),salt=raw.slice(0,16),iv=raw.slice(16,28),ct=raw.slice(28);
+    crypto.subtle.importKey('raw',new TextEncoder().encode(code),'PBKDF2',false,['deriveKey']).then(function(k){
+      return crypto.subtle.deriveKey({name:'PBKDF2',salt:salt,iterations:600000,hash:'SHA-256'},k,{name:'AES-GCM',length:256},false,['decrypt']);
+    }).then(function(k){return crypto.subtle.decrypt({name:'AES-GCM',iv:iv},k,ct);}).then(function(buf){
+      PH=JSON.parse(new TextDecoder().decode(buf));
+      try{localStorage.setItem('luach.code',code);}catch(e){}
+      note.textContent='הטלפונים פתוחים במכשיר הזה.';$('telCode').value='';render();
+    }).catch(function(){if(!quiet){note.textContent='הקוד לא נכון.';}});
+  }
+  $('telOpen').addEventListener('click',function(){var c=$('telCode').value.trim();if(c){unlock(c,false);}else{$('telCode').focus();}});
+  try{var sc=localStorage.getItem('luach.code');if(sc){unlock(sc,true);}}catch(e){}
   var calBlob=null;
   function cellInfo(o){
     var L=[],kind='';
@@ -372,7 +420,7 @@ if(typeof module!=='undefined'){module.exports={build:build,allNames:allNames,DA
   function render(){
     $('empty').hidden=!!me;$('out').hidden=!me;if(!me){return;}
     var r=build(DATA,me,H);
-    $('icsBtn').href='data:text/calendar;charset=utf-8,'+encodeURIComponent(icsFor(DATA,r.cal));
+    $('icsBtn').href='data:text/calendar;charset=utf-8,'+encodeURIComponent(icsFor(DATA,r.cal.map(function(e){return (e.desc&&!e.time)?{day:e.day,title:e.title,desc:teamText(e.day)}:e;})));
     paintCal(r);
     $('m1').textContent=r.m1;$('m2').textContent=r.m2;$('m3').textContent=r.m3;
     ['m1','m2','m3'].forEach(function(k){var a=document.querySelector('[data-wa="'+k+'"]');if(a){a.href='https://wa.me/?text='+encodeURIComponent($(k).textContent);}});
@@ -380,8 +428,7 @@ if(typeof module!=='undefined'){module.exports={build:build,allNames:allNames,DA
     r.duties.forEach(function(o){
       var it=el('div','item');it.appendChild(el('span','when',r.dm(o.d)+', יום '+HEB_DOW[o.dow]));
       var what=el('span','what');what.appendChild(el('b',o.half?'red':'',o.role));it.appendChild(what);
-      it.appendChild(el('span','with','בכירים: '+o.seniors.join(', ')));
-      it.appendChild(el('span','with','תורנים: '+o.residents.join(', ')));
+      addTeam(it,o.d);
       if(o.hol.length){it.appendChild(el('span','with hol','חל ב: '+o.hol.join(', ')));}dl.appendChild(it);
     });
     if(!r.duties.length){dl.appendChild(el('p','note','אין לך כוננויות או תורנויות בחודש זה לפי הלוח.'));}
