@@ -130,6 +130,9 @@ details.card[open]>summary{margin-bottom:0}
 #statBox{display:flex;flex-direction:column;gap:2px;font-size:.95rem}
 #statBox b{font-size:1.05rem}
 .how li{margin-bottom:2px}
+
+.item .with .p.half .r{font-size:inherit}
+.item .with .p.half .n{font-size:1.02rem}
 </style>
 
 <div class="wrap" dir="rtl" lang="he">
@@ -187,16 +190,6 @@ details.card[open]>summary{margin-bottom:0}
   <div id="out" hidden style="display:flex;flex-direction:column;gap:20px">
     <div class="warns" id="warns" hidden></div>
 
-    <section class="card" aria-labelledby="hd">
-      <h2 id="hd">התורנויות שלי</h2>
-      <div class="list" id="dutyList"></div>
-    </section>
-
-    <section class="card" aria-labelledby="hs">
-      <h2 id="hs">תרגילי החייאה ומצגות</h2>
-      <div class="list" id="taskList"></div>
-    </section>
-
     <section class="card" aria-labelledby="hc">
       <h2 id="hc">החודש במבט אחד</h2>
       <div class="cal" id="cal"></div>
@@ -209,18 +202,26 @@ details.card[open]>summary{margin-bottom:0}
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><a class="wa" id="icsBtn" download="luach.ics" style="background:var(--duty);color:var(--duty-ink)">הוסף ליומן שלי</a><button id="shareImg" style="background:var(--home);color:var(--surface);border-color:var(--home);font-weight:700;padding:5px 12px">שתף את הלוח כתמונה</button><canvas id="calCanvas" hidden></canvas><span class="note">"הוסף ליומן שלי" מוריד קובץ יומן עם התורנויות, המפגשים, החגים והאירועים שסימנת. פותחים את הקובץ, והטלפון מציע להוסיף את האירועים ליומן שלו (גוגל, אפל או סמסונג). זו הוספה חד־פעמית: אם הלוח משתנה, מוסיפים שוב.</span></div>
       <span class="note" id="shareNote" role="status">"שתף את הלוח כתמונה" פותח את תפריט השיתוף של הטלפון, ומשם בוחרים וואטסאפ.</span>
-      <div style="display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line);padding-top:10px">
-        <span style="font-weight:700;font-size:.95rem;color:var(--duty)">האירועים שלי</span>
-        <span class="note">חופשה, מחלה, כנס או יום ספרייה: בחרו תאריך (או לחצו על יום בלוח), בחרו סוג, והוסיפו. נשמר במכשיר הזה בלבד ולא נראה לאחרים.</span>
+    </section>
+
+    <section class="card" aria-labelledby="hd">
+      <h2 id="hd">התורנויות שלי</h2>
+      <div class="list" id="dutyList"></div>
+    </section>
+
+    <section class="card" aria-labelledby="hs">
+      <h2 id="hs">תרגילי החייאה ומצגות</h2>
+      <div class="list" id="taskList"></div>
+    </section>
+
+    <details class="card" id="foldEv" aria-labelledby="he"><summary><h2 id="he">האירועים שלי</h2></summary><div class="foldin"><span class="note">חופשה, מחלה, כנס או יום ספרייה: בחרו תאריך (או לחצו על יום בלוח החודשי), בחרו סוג, והוסיפו. נשמר במכשיר הזה בלבד ולא נראה לאחרים.</span>
         <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
           <input type="date" id="cuDate" aria-label="תאריך המועד">
           <select id="cuType" aria-label="סוג האירוע"><option>חופשה</option><option>חו״ל</option><option>מחלה</option><option>כנס</option><option>יום ספרייה</option><option>השתלמות</option><option>מילואים</option><option>אחר</option></select>
           <input type="text" id="cuName" placeholder="פירוט (לא חובה)" aria-label="פירוט" style="flex:1;min-width:120px">
           <button id="cuAdd" style="padding:7px 14px">הוסף</button>
         </div>
-        <div id="cuList" style="display:flex;flex-direction:column;gap:4px"></div>
-      </div>
-    </section>
+        <div id="cuList" style="display:flex;flex-direction:column;gap:4px"></div></div></details>
 
     <details class="card" aria-labelledby="hm"><summary><h2 id="hm">הודעות מוכנות להעתקה</h2></summary><div class="foldin"><p class="sub">נבנות לבד מהלוח. להדביק לעצמך בוואטסאפ או בפתקים.</p>
       <div class="msg"><div class="msg-head"><h3>תורנויות</h3><span class="acts"><a class="wa" data-wa="m1">שלח לוואטסאפ</a><button data-copy="m1">העתק</button></span></div><pre id="m1"></pre></div>
@@ -643,7 +644,7 @@ if(typeof module!=='undefined'){module.exports={build:build,allNames:allNames};}
       var ci=cellInfo(o),c=el('div','cell'+(ci.kind?' '+ci.kind:'')+(ci.rest?' rest':''));
       c.appendChild(el('b','',String(o.d)));
       ci.L.forEach(function(l){c.appendChild(el('span',l.type==='hol'?('hol'+(l.rest?' rest':'')):(l.type==='time'?'t':''),l.t));});
-      c.addEventListener('click',function(){$('cuDate').value=DATA.month+'-'+pad2(o.d);$('cuType').focus();});
+      c.addEventListener('click',function(){$('foldEv').open=true;$('cuDate').value=DATA.month+'-'+pad2(o.d);$('foldEv').scrollIntoView({block:'center'});$('cuType').focus();});
       cal.appendChild(c);
     });
   }
