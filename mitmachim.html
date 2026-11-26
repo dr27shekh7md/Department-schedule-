@@ -301,7 +301,7 @@ var DATA={
     {day:27,kind:'stageA',people:['וילנר']},
     {day:28,kind:'sim',people:['ולי','ארד','סטימן','עבאד','זועבי']},
     {day:29,kind:'stageB',people:['מריסאת']},
-    {day:31,kind:'staff',topic:'פנטניל ב־RSI בקיסרי - משפיע על העובר?',people:['שיח','דביר']}
+    {day:31,kind:'staff',topic:'פנטניל ב־RSI בקיסרי - משפיע על העובר?',people:['שיח','דביר'],review:'sifrut-2026-12-31.html'}
   ]};
 </script>
 
@@ -351,7 +351,7 @@ function build(D,name,prefs){
     if(!rel){return;}
     var mine=(e.kind==='staff'||e.kind==='stageA'||e.kind==='stageB')&&has(e.people);
     var co=mine?e.people.filter(function(p){return canon(D,p)!==name;}).join(' וד״ר '):'';
-    (evMap[e.day]=evMap[e.day]||{})[e.kind]={topic:e.topic||'',mine:mine,co:co,kind:e.kind};
+    (evMap[e.day]=evMap[e.day]||{})[e.kind]={topic:e.topic||'',mine:mine,co:co,kind:e.kind,review:e.review||''};
   });
   var days=[],prep=[],duties=[],tasks=[];
   for(var d=1;d<=n;d++){
@@ -391,7 +391,7 @@ function build(D,name,prefs){
       if(!E.cancel){talks.forEach(function(e){
         var what=e.kind==='staff'?'להכין מצגת':'להכין הצגת מקרה';
         prep.push({d:d,w:w,e:e,what:what});
-        tasks.push({d:d,dow:w,what:what+(e.co?' עם ד״ר '+e.co:''),detail:e.topic});});}
+        tasks.push({d:d,dow:w,what:what+(e.co?' עם ד״ר '+e.co:''),detail:e.topic,link:e.review});});}
     }
     if(o.hol.length){o.line+=' ('+o.hol.map(function(x){return x.name;}).join(', ')+')';}
     days.push(o);
@@ -667,7 +667,7 @@ if(typeof module!=='undefined'){module.exports={build:build,allNames:allNames};}
     r.tasks.forEach(function(o){
       var it=el('div','item');it.appendChild(el('span','when',r.dm(o.d)+', יום '+HEB_DOW[o.dow]));
       var what=el('span','what');what.appendChild(el('b','red',o.what));it.appendChild(what);
-      if(o.detail){it.appendChild(el('span','with',o.detail));}tl.appendChild(it);
+      if(o.detail){it.appendChild(el('span','with',o.detail));}if(o.link){var ls=el('span','with'),la=el('a','wa','סקירת ספרות למצגת');la.href='https://dr27shekh7md.github.io/Department-schedule-/'+o.link;la.target='_blank';la.rel='noopener';la.style.cssText='display:inline-block;background:var(--duty);color:var(--duty-ink);margin-top:4px';ls.appendChild(la);it.appendChild(ls);}tl.appendChild(it);
     });
     if(!r.tasks.length){tl.appendChild(el('p','note','אין לך תרגיל החייאה משובץ ואין מצגת להכין בחודש זה.'));}
     var cal=$('cal');cal.textContent='';

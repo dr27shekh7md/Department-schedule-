@@ -277,7 +277,7 @@ var DATA={
     {day:24,kind:'staff',topic:'הרדמה לפרוצדורות ב־EP - מה אני צריך למטופל שלי מתן',people:['אלי קלפון']},
     {day:27,kind:'stageA',people:['וילנר']},
     {day:29,kind:'stageB',people:['מריסאת']},
-    {day:31,kind:'staff',topic:'פנטניל ב־RSI בקיסרי - משפיע על העובר?',people:['שיח','דביר']}
+    {day:31,kind:'staff',topic:'פנטניל ב־RSI בקיסרי - משפיע על העובר?',people:['שיח','דביר'],review:'sifrut-2026-12-31.html'}
   ]};
 </script>
 
@@ -324,7 +324,7 @@ function build(D,name,H){
     if(e.kind==='cancel'||(e.people||[]).indexOf(name)<0){return;}
     var co=e.people.filter(function(x){return x!==name;}).join(' וד״ר ');
     cal.push({day:e.day,title:EV[e.kind]+(co?' עם ד״ר '+co:''),time:'07:00',desc:e.topic||''});
-    tasks.push({d:e.day,dow:dow(e.day),what:EV[e.kind]+(co?' עם ד״ר '+co:''),topic:e.topic||''});
+    tasks.push({d:e.day,dow:dow(e.day),what:EV[e.kind]+(co?' עם ד״ר '+co:''),topic:e.topic||'',link:e.review||''});
   });
   var m1='*הכוננויות והתורנויות שלי - '+title+'*\n\n';
   if(!duties.length){m1+='אין לי כוננויות או תורנויות בחודש זה לפי הלוח.';}
@@ -565,7 +565,7 @@ if(typeof module!=='undefined'){module.exports={build:build,allNames:allNames,DA
     r.tasks.forEach(function(o){
       var it=el('div','item');it.appendChild(el('span','when',r.dm(o.d)+', יום '+HEB_DOW[o.dow]+' · 07:00'));
       var what=el('span','what');what.appendChild(el('b','red',o.what));it.appendChild(what);
-      if(o.topic){it.appendChild(el('span','with',o.topic));}tl.appendChild(it);
+      if(o.topic){it.appendChild(el('span','with',o.topic));}if(o.link){var ls=el('span','with'),la=el('a','wa','סקירת ספרות למצגת');la.href='https://dr27shekh7md.github.io/Department-schedule-/'+o.link;la.target='_blank';la.rel='noopener';la.style.cssText='display:inline-block;background:var(--duty);color:var(--duty-ink);margin-top:4px';ls.appendChild(la);it.appendChild(ls);}tl.appendChild(it);
     });
     if(!r.tasks.length){tl.appendChild(el('p','note','השם שלך לא מופיע כמציג בחודש זה.'));}
     var cal=$('cal');cal.textContent='';
