@@ -216,6 +216,8 @@ details.card[open]>summary{margin-bottom:0}
       <div class="list" id="taskList"></div>
     </section>
 
+    <section class="card" id="revCard" hidden aria-labelledby="hr"><h2 id="hr">סקירות ספרות לישיבות הצוות</h2><p class="sub">מאמרים מרכזיים על נושא כל ישיבה, עם קישורים.</p><div class="list" id="revList"></div></section>
+
     <details class="card" id="foldEv" aria-labelledby="he"><summary><h2 id="he">האירועים שלי</h2></summary><div class="foldin"><span class="note">חופשה, מחלה, כנס או יום ספרייה: בחרו תאריך (או לחצו על יום בלוח החודשי), בחרו סוג, והוסיפו. נשמר במכשיר הזה בלבד ולא נראה לאחרים.</span>
         <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
           <input type="date" id="cuDate" aria-label="תאריך המועד">
@@ -284,7 +286,7 @@ var DATA={
     ['גבאי','חוסרי','ארד','יחיא']],
   events:[
     {day:1,kind:'stageB',people:['זברב']},
-    {day:3,kind:'staff',topic:'הרדמה ב־CS בהול - אזורית VS כללית',people:['ותד','דביר']},
+    {day:3,kind:'staff',topic:'הרדמה ב־CS בהול - אזורית VS כללית',people:['ותד','דביר'],review:'sifrut-2026-12-03.html'},
     {day:6,kind:'stageA',people:['וילנר']},
     {day:7,kind:'sim',people:['עיאדאת','בריוחנובה','שיח','זהראן','שרקייה']},
     {day:8,kind:'stageB',people:['דביר']},
@@ -293,11 +295,11 @@ var DATA={
     {day:14,kind:'sim',people:['ותד','עיסא','גמאל','אסלאן','חורי']},
     {day:15,kind:'stageB',people:['זייבק']},
     {day:16,kind:'block',people:['מוקבל']},
-    {day:17,kind:'staff',topic:'חזה אויר ו־DLT',people:['ארד','גברילוב']},
+    {day:17,kind:'staff',topic:'חזה אויר ו־DLT',people:['ארד','גברילוב'],review:'sifrut-2026-12-17.html'},
     {day:20,kind:'stageA',people:['וילנר']},
     {day:21,kind:'sim',people:['חוסרי','שיבלי','גולדהכט','נמצאנו','דהן']},
     {day:22,kind:'stageB',people:['מוקבל']},
-    {day:24,kind:'staff',topic:'הרדמה לפרוצדורות ב־EP - מה אני צריך למטופל שלי מתן',people:['אלי קלפון']},
+    {day:24,kind:'staff',topic:'הרדמה לפרוצדורות ב־EP - מה אני צריך למטופל שלי מתן',people:['אלי קלפון'],review:'sifrut-2026-12-24.html'},
     {day:27,kind:'stageA',people:['וילנר']},
     {day:28,kind:'sim',people:['ולי','ארד','סטימן','עבאד','זועבי']},
     {day:29,kind:'stageB',people:['מריסאת']},
@@ -620,6 +622,14 @@ if(typeof module!=='undefined'){module.exports={build:build,allNames:allNames};}
     var name=t==='אחר'?n:(n?t+' - '+n:t);
     custom.push({day:+v.slice(8),name:name.slice(0,60),type:t});$('cuDate').value='';$('cuName').value='';syncCustom();render();
   });
+  function drawReviews(){
+    var box=$('revList'),evs=(DATA.events||[]).filter(function(e){return e.review;});$('revCard').hidden=!evs.length;box.textContent='';
+    evs.forEach(function(e){
+      var it=el('div','item');it.appendChild(el('span','when',pad2(e.day)+'/'+DATA.month.slice(5)));
+      var w=el('span','what');w.appendChild(el('b','',e.topic));it.appendChild(w);
+      var ls=el('span','with'),la=el('a','wa','לסקירה');la.href='https://dr27shekh7md.github.io/Department-schedule-/'+e.review;la.target='_blank';la.rel='noopener';la.style.cssText='display:inline-block;background:var(--duty);color:var(--duty-ink);margin-top:4px';ls.appendChild(la);it.appendChild(ls);box.appendChild(it);
+    });
+  }
   var MAINKEY='roster',OTHERKEY='senior',CUR={month:DATA.month,events:DATA.events,holidays:baseHol,prevLastDay:DATA.prevLastDay},ALLM=(DATA.history||[]).concat([{month:DATA.month,rows:DATA[MAINKEY],other:DATA[OTHERKEY]}]);
   function nextOf(m){var p=m.split('-'),y=+p[0],k=+p[1]+1;if(k>12){k=1;y++;}return y+'-'+pad2(k);}
   function fillNames(){
@@ -653,7 +663,7 @@ if(typeof module!=='undefined'){module.exports={build:build,allNames:allNames};}
     $('m1').textContent=r.m1;$('m2').textContent=r.m2;$('m3').textContent=r.m3;
     ['m1','m2','m3'].forEach(function(k){var a=document.querySelector('[data-wa="'+k+'"]');if(a){a.href='https://wa.me/?text='+encodeURIComponent($(k).textContent);}});
     $('icsBtn').href='data:text/calendar;charset=utf-8,'+encodeURIComponent(icsFor(DATA,r.cal.map(function(e){return (e.desc&&!e.time)?{day:e.day,title:e.title,desc:teamText(e.day)}:e;})));
-    paintCal(r);drawStats(r);
+    paintCal(r);drawStats(r);drawReviews();
     var w=$('warns');w.textContent='';r.warnings.forEach(function(t){w.appendChild(el('div','',t));});w.hidden=!r.warnings.length;
     var dl=$('dutyList');dl.textContent='';
     r.duties.forEach(function(o){
